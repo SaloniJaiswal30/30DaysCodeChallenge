@@ -1,0 +1,98 @@
+#include <stdint.h>
+
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Node
+{
+	int data;
+	struct Node* npx; 
+	
+	Node(int x){
+	    data = x;
+	    npx = NULL;
+	}
+};
+
+struct Node* XOR (struct Node *a, struct Node *b)
+{
+	return (struct Node*) ((uintptr_t) (a) ^ (uintptr_t) (b));
+}
+
+struct Node* insert(struct Node *head, int data);
+
+vector<int> printList (struct Node *head);
+
+int main ()
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        struct Node *head = NULL;
+        int n, tmp;
+        cin>>n;
+        while(n--)
+        {
+            cin>>tmp;
+            head = insert(head, tmp);
+        }
+        vector<int> vec = printList (head);
+        for(int x : vec)
+        cout<<x<<" ";
+        cout<<endl;
+        for(int i = vec.size() - 1;i>=0;i--){
+            cout<<vec[i]<<" ";
+        }
+        cout<<"\n";
+    }
+	return (0);
+}
+
+
+// function should insert the data to the front of the list
+struct Node* insert(struct Node *head, int data)
+{
+    Node *node= new Node(data);
+    //cout<<data<<"--\n";
+    if(head==NULL){
+        node->npx=head;
+        head=node;
+    }
+    else{
+        head->npx=XOR(head->npx,node);
+        node->npx=head;
+        head=node;
+    }
+    return head;
+	// Code here
+}
+
+vector<int> printList (struct Node *head)
+{
+	Node *prev=head;
+	Node *tmp=head;
+	Node *btwn;
+	vector<int> v1;
+	int b=0;
+	if(tmp->npx==NULL)
+	    v1.push_back(tmp->data);
+	else{
+    	while(1){
+    	    v1.push_back(tmp->data);
+    	    if(tmp==head)
+    	        tmp=tmp->npx;
+    	    else{
+    	        btwn=XOR(tmp->npx, prev);
+    	        prev=tmp;
+    	        tmp=btwn;
+    	    }
+    	    if(b==1)
+    	        break;
+    	    if(tmp->npx==prev)
+    	        b=1;
+    	}
+	}
+	return v1;
+}
+

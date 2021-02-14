@@ -1,0 +1,67 @@
+#include <bits/stdc++.h> 
+using namespace std;
+
+class Node{
+    public:
+    int data;
+    Node *right;
+    Node *left;
+    int val;
+    Node(int d){
+        data=d;
+        val=0;
+        right=NULL;
+        left=NULL;
+    }
+};
+
+void VerticalTraversal(Node *root){
+    queue<Node*>q1;
+    map<int,vector<int>> m1;
+    q1.push(root);
+   // q1.push_back(NULL);
+    while(!q1.empty()){
+        Node *tmp=q1.front();
+        m1[tmp->val].push_back(tmp->data);
+        q1.pop();
+        if(tmp->left){
+            q1.push(tmp->left);
+            tmp->left->val=tmp->val-1;
+        }
+        if(tmp->right){
+            q1.push(tmp->right);
+            tmp->right->val=tmp->val+1;
+        }
+    }
+    int level=0;
+    for(auto i=m1.begin();i!=m1.end();i++){
+        cout<<level<<" - ";
+        for(int j=0;j<m1[i->first].size();j++){
+            cout<<m1[i->first][j]<<" ";
+        }
+        cout<<"\n";
+        level++;
+    }
+        
+}
+int main() {
+	  Node *root =new Node(1);
+    root->left=new Node(2);
+    root->right=new Node(3);
+    root->left->left=new Node(4);
+    root->left->right=new Node(5);
+    root->right->left=new Node(6);
+    root->right->right=new Node(7);
+    root->left->left->left=new Node(8);
+    root->left->left->right=new Node(9);
+    VerticalTraversal(root);
+	  return 0;
+}
+/*--output--
+0 - 8 
+1 - 4 
+2 - 2 9 
+3 - 1 5 6 
+4 - 3 
+5 - 7 
+*/

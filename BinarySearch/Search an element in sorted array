@@ -1,0 +1,28 @@
+#include <bits/stdc++.h> 
+using namespace std; 
+
+int binarysearch(int arr[],int l,int r,int s){
+    if(l>r)
+        return -1;
+    int mid=l+((r-l)/2);
+    if(arr[mid]==s)
+        return mid;
+    else if(arr[mid]<s)
+        binarysearch(arr,mid+1,r,s);
+    else if(arr[mid]>s)
+        binarysearch(arr,l,mid-1,s);
+    
+}
+ 
+int main() 
+{ 
+    int  arr[] = {11, 12, 13,14, 15, 16,17,18,19,20}; 
+    cout<<"element present on index:"<<binarysearch(arr,0,9,17)<<"\n";
+    //if element no present then it will return -1;
+    cout<<"element present on index:"<<binarysearch(arr,0,9,21);
+    return 0; 
+} 
+
+/*---output--
+element present on index:6
+element present on index:-1

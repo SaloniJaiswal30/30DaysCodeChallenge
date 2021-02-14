@@ -1,0 +1,54 @@
+//#include <iostream>
+#include <bits/stdc++.h> 
+using namespace std;
+
+class Node{
+    public:
+    int data;
+    Node *right;
+    Node *left;
+    Node(int d){
+        data=d;
+        right=NULL;
+        left=NULL;
+    }
+};
+vector<int> v1;
+int sum=0;
+void LeafNodeSum(Node *root){
+    if(root->left==NULL && root->right==NULL){
+        v1.push_back(root->data);
+        sum=sum+root->data;
+    }
+    if(root->left)
+    LeafNodeSum(root->left);
+    if(root->right)
+    LeafNodeSum(root->right);
+        
+}
+int main() {
+	Node *root =new Node(1);
+    root->left=new Node(2);
+    root->right=new Node(3);
+    root->left->left=new Node(4);
+    root->left->right=new Node(5);
+    root->right->left=new Node(6);
+    root->right->right=new Node(7);
+    root->left->left->left=new Node(8);
+    root->left->left->right=new Node(9);
+    LeafNodeSum(root);
+    cout<<"Leaf nodes are:";
+    for(int i=0;i<v1.size();i++)
+        cout<<v1[i]<<" ";
+        
+    cout<<"\nSum of all leaf nodes:"<<sum;
+    return 0;
+}
+/*--output--
+      1
+    2   3
+  4  5 6  7
+8  9
+Leaf nodes are:8 9 5 6 7 
+Sum of all leaf nodes:35
+*/

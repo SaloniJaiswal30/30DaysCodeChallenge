@@ -1,0 +1,43 @@
+#include <bits/stdc++.h> 
+using namespace std; 
+
+// aray can be sorted in increasing order or decreasing order;
+int Agnosticbinarysearch(int arr[],int l,int r,int s){
+    if(arr[l]<arr[r]){
+        if(l>r)
+            return -1;
+        int mid=l+((r-l)/2);
+        if(arr[mid]==s)
+            return mid;
+        else if(arr[mid]<s)
+            Agnosticbinarysearch(arr,mid+1,r,s);
+        else if(arr[mid]>s)
+            Agnosticbinarysearch(arr,l,mid-1,s);
+    }
+    else{
+        if(l>r)
+            return -1;
+        int mid=l+((r-l)/2);
+        if(arr[mid]==s)
+            return mid;
+        else if(arr[mid]>s)
+            Agnosticbinarysearch(arr,mid+1,r,s);
+        else if(arr[mid]<s)
+            Agnosticbinarysearch(arr,l,mid-1,s);
+    }
+    
+}
+ 
+int main() 
+{ 
+    //if element no present then it will return -1;
+    int  arr[] = {11, 12, 13,14, 15, 16,17,18,19,20}; 
+    cout<<"element present on index:"<<Agnosticbinarysearch(arr,0,9,17)<<"\n";
+    int arr1[] = {21, 20, 15,14, 11, 8,5,4,0,-1}; 
+    cout<<"element present on index:"<<Agnosticbinarysearch(arr1,0,9,8);
+    return 0; 
+} 
+/*--output--
+element present on index:6
+element present on index:5
+*/

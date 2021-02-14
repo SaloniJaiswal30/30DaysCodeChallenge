@@ -1,0 +1,51 @@
+//First and last occurrence of the number in an sorted array(have multiple occurrence of a number)
+
+#include <bits/stdc++.h> 
+using namespace std; 
+
+int maxi;
+int firstocc(int arr[],int l,int r,int s){
+    if(l>r)
+        return -1;
+    int mid=l+((r-l)/2);
+    if(arr[mid]==s){
+        maxi=mid;
+        firstocc(arr,l,mid-1,s);
+    }
+    else if(arr[mid]<s)
+        firstocc(arr,mid+1,r,s);
+    else if(arr[mid]>s)
+        firstocc(arr,l,mid-1,s);
+}
+int lastocc(int arr[],int l,int r,int s){
+    if(l>r)
+        return -1;
+    int mid=l+((r-l)/2);
+    if(arr[mid]==s){
+        maxi= mid;
+        lastocc(arr,mid+1,r,s);
+    }
+    else if(arr[mid]<s)
+        lastocc(arr,mid+1,r,s);
+    else if(arr[mid]>s)
+        lastocc(arr,l,mid-1,s);
+}
+ 
+int main() 
+{ 
+    //if element no present then it will return -1;
+    int  arr[] = {11, 12, 13,16, 16, 16,17,18,19,20}; 
+    maxi=-1;
+    firstocc(arr,0,9,16);
+    cout<<"element present on index:"<<maxi<<"\n";
+    int arr1[] = {18,18,18,26,31,49,57,65,73,82}; 
+    maxi=-1;
+    lastocc(arr1,0,9,18);
+    cout<<"element present on index:"<<maxi;
+    return 0; 
+} 
+/*
+--output--
+element present on index:3
+element present on index:2
+*/

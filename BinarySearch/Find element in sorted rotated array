@@ -1,0 +1,54 @@
+
+#include <bits/stdc++.h> 
+using namespace std; 
+
+int maxi;
+int NoOfRotation(int arr[],int l,int r){
+    if(l>r)
+        return 0;
+    int mid=l+((r-l)/2);
+    if((mid+1)<=r && arr[mid]>arr[mid+1]){
+        maxi=mid+1;
+    }
+    else if((mid-1)>=l && arr[mid-1]>arr[mid]){
+        maxi=mid;
+    }
+    else if(arr[l]<arr[mid] && arr[mid]>arr[r]){
+        NoOfRotation(arr,mid+1,r);
+    }
+    else if(arr[l]>arr[mid] && arr[mid]<arr[r])
+        NoOfRotation(arr,l,mid-1);
+}
+int binarySearch(int arr[],int l, int r, int s){
+    if(l>r)
+        return -1;
+    int mid=l+((r-l)/2);
+    if(arr[mid]==s)
+        return mid;
+    else if(arr[mid]>s)
+        binarySearch(arr,l,mid-1,s);
+    else
+        binarySearch(arr,mid+1,r,s);
+}
+int main() 
+{ 
+    int  arr[] = {11, 12, 13,16, 4, 5,6,7,8,9}; 
+    maxi=0;
+    NoOfRotation(arr,0,9);
+    cout<<"Division of array:"<<maxi<<"\n";
+    int l=binarySearch(arr,0,maxi-1,4);
+    int r=binarySearch(arr,maxi,9,4);
+    if(l==-1 && r==-1)
+        cout<<"element at position:-1\n";
+    else if(l==-1)
+        cout<<"element at position:"<<r<<"\n";
+    else if(r==-1)
+        cout<<"element at position:"<<l<<"\n";
+    return 0; 
+} 
+
+/*
+--output--
+Division of array:4
+element at position:4
+*/

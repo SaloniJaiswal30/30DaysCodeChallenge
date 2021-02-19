@@ -1,0 +1,44 @@
+// C++ program to find size of an array by using a  
+// pointer hack. 
+#include <bits/stdc++.h> 
+using namespace std; 
+
+int len;
+int binarySearch(int arr[],int  l, int r){
+    if(l>r){
+        return -1;}
+    int mid=l+((r-l)/2);
+    if(mid==0 && arr[mid]>arr[mid+1]){
+
+        return mid;
+    }
+    else if(mid==len-1 && arr[mid-1]<arr[mid]){
+  
+        return mid;
+    }
+    else if(mid-1>=0 && mid+1<len && arr[mid]>arr[mid-1] && arr[mid]>arr[mid+1]){
+
+        return mid;
+    }
+    else if(mid-1>=0 && mid+1<len && arr[mid-1]>arr[mid+1])
+        return binarySearch(arr,l,mid-1);
+    else
+       return binarySearch(arr,mid+1,r);
+}
+int peakElement(int arr[], int n)
+{
+    len=n;
+    return (binarySearch(arr,0,n-1));
+
+}
+int main() 
+{ 
+    int  arr[] = {6, 1, 15, 19, 9, 13, 12, 6, 7, 2, 10, 4, 1, 14, 11, 14, 14, 13}; 
+    cout<<"index of a peak element : "<<peakElement(arr,18)<<"\n";
+    return 0; 
+} 
+
+/*
+--output--
+index of a peak element : 8
+*/

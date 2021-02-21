@@ -1,0 +1,82 @@
+
+#include<bits/stdc++.h>
+using namespace std;
+
+struct Node
+{
+	int data;
+	struct Node *left;
+	struct Node *right;
+	
+	Node(int x){
+	    data = x;
+	    left = NULL;
+	    right = NULL;
+	}
+};
+
+Node *buildTree(int inorder[], int preorder[], int n);
+
+void printPostOrder(Node *root)
+{
+	if(root==NULL)
+		return;
+	printPostOrder(root->left);
+	printPostOrder(root->right);
+	cout<<root->data<<" ";
+}
+
+int main()
+{
+	int t;
+	cin>>t;
+	while(t--)
+	{
+		int n;
+		cin>>n;
+		
+		int inorder[n], preorder[n];
+		for(int i=0; i<n; i++)
+			cin>> inorder[i];
+		for(int i=0; i<n; i++)
+			cin>> preorder[i];
+		
+		Node *root = buildTree(inorder, preorder, n);
+		printPostOrder(root);
+		cout<< endl;
+	}
+}
+static int preIndex = 0;
+int search(int in[],int strt,int end,int s){
+    for(int i=strt;i<end;i++){
+        if(s==in[i]){
+            return i;
+        }
+    }
+}
+Node* buildTree1(int in[],int pre[],int strt, int end){
+    
+    if(strt>end)
+        return NULL;
+    Node *tmp=new Node(pre[preIndex++]);
+    int index=search(in,strt,end,tmp->data);
+    tmp->left=buildTree1(in,pre,strt,index-1);
+    tmp->right=buildTree1(in,pre,index+1,end);
+    return tmp;
+}
+Node* buildTree(int in[],int pre[], int n)
+{
+    preIndex=0;
+    return buildTree1( in, pre, 0,  n-1);
+}
+
+
+/*
+--input--
+5
+10 1 30 40 20
+1 10 20 30 40
+ 
+--output--
+10 40 30 20 1
+*/

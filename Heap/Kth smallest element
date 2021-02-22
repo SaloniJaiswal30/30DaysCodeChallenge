@@ -1,0 +1,30 @@
+
+#include<bits/stdc++.h>
+using namespace std;
+
+
+void Ksmallest(int arr[], int n,int k)
+{
+    priority_queue<int> pq;
+    for(int i=0;i<n;i++){
+        pq.push(arr[i]);
+        if(pq.size()>k){
+            pq.pop();
+        }
+    }
+    cout<<"kth smallest element is:"<<pq.top();
+}
+
+
+int main()
+{
+    int arr[] = {7, 10, 2, 20, 15,4};
+    int n = sizeof(arr)/sizeof(int);
+    Ksmallest(arr, n,3);
+    return 0;
+}
+
+/*
+--output--
+kth smallest element is: 7
+*/

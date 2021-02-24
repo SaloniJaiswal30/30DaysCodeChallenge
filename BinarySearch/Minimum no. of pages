@@ -1,0 +1,73 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class Solution {
+  public:
+    bool valid(int arr[],int mid,int n,int k){
+        int student=1;
+        int sum=0;
+        for(int i=0;i<n;i++){
+            sum=sum+arr[i];
+            if(sum>mid){
+                sum=0;
+                i--;
+                student++;
+            }
+            if(student>k)
+                return false;
+        }
+        return true;
+    }
+    int findPages(int arr[], int n, int m) {
+        int max=0;
+        int sum=0;
+        int res=-1;
+        for(int i=0;i<n;i++){
+           sum=sum+arr[i];
+           if(max<arr[i])
+                max=arr[i];
+        }
+        int high=sum;
+        int low=max;
+        while(low<=high){
+            int mid=low+((high-low)/2);
+            if(valid(arr,mid,n,m)){
+                high=mid-1;
+                res=mid;
+            }
+            else{
+                low=mid+1;
+            }
+            
+        }
+       return res;
+    }
+};
+
+
+int main() {
+    int t;
+    cin>>t;
+    while(t--){
+        int n;
+        cin>>n;
+        int A[n];
+        for(int i=0;i<n;i++){
+            cin>>A[i];
+        }
+        int m;
+        cin>>m;
+        Solution ob;
+        cout << ob.findPages(A, n, m) << endl;
+    }
+    return 0;
+}
+/*
+--input--
+t=1
+n=4
+arr=12,34,67,90
+k-2'
+--output--
+113
+*/

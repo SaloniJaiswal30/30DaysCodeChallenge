@@ -1,0 +1,38 @@
+
+#include <bits/stdc++.h> 
+using namespace std; 
+
+void construct(int input[],int segtree[],int low,int high,int pos){
+    if(low==high){
+        segtree[pos]=input[low];
+        cout<<pos<<"="<<input[low]<<"\n";
+        return;
+    }
+    int mid=low+((high-low)/2);
+    construct(input,segtree,low,mid,2*pos+1);
+    construct(input,segtree,mid+1,high,2*pos+2);
+    segtree[pos]=min(segtree[2*pos+1],segtree[2*pos+2]);
+    cout<<pos<<"="<<segtree[pos]<<"\n";
+        
+}
+
+int main() 
+{ 
+    int  arr[] = {-1,2,4,0}; 
+    int n=4;
+    int si=n*2-1;
+    int segtree[si]={INT_MAX};
+    construct(arr,segtree,0,3,0);
+    return 0; 
+} 
+
+/*
+--input--
+-1,2,4,0
+--output--
+-1,-1,0,-1,2,0,4
+         -1
+     -1      0
+  -1    2  4    0
+
+*/

@@ -1,0 +1,101 @@
+// { Driver Code Starts
+#include<bits/stdc++.h>
+using namespace std;
+
+int *constructST(int arr[],int n);
+
+
+int RMQ(int st[] , int n, int a, int b);
+int main()
+{
+    int T;
+    cin>>T;
+    while(T--)
+    {
+        int N;
+        cin>>N;
+        int A[N];
+        for(int i=0;i<N;i++)
+            cin>>A[i];
+        int Q;
+        cin>>Q;
+
+
+
+        int *segTree = constructST(A,N);
+
+        for(int i=0;i<Q;i++)
+        {
+            int start,e;
+            
+            cin>>start>>e;
+            if(start>e)
+            {
+                swap(start,e);
+            }
+            cout<<RMQ(segTree,N,start,e)<<" ";
+        }
+        cout<<endl;
+    }
+}
+// } Driver Code Ends
+
+
+/* The functions which 
+builds the segment tree */
+void construct(int arr[],int *segtree,int low,int high,int pos)
+{
+    if(low==high){
+        segtree[pos]=arr[low];
+        cout<<pos<<"="<<segtree[pos]<<"\n";
+        return;
+    }
+    int mid=low+((high-low)/2);
+    construct(arr,segtree,low,mid,2*pos+1);
+    construct(arr,segtree,mid+1,high,2*pos+2);
+    segtree[pos]=min(segtree[2*pos+1],segtree[2*pos+2]);
+    cout<<pos<<"="<<segtree[pos]<<"\n";
+}
+int *constructST(int arr[],int n)
+{ 
+    int x=(int)(ceil(log2(n)));
+    int s=2*(int)pow(2,x)-1;
+    int *segtree=new int(s);
+    fill_n( segtree, s, INT_MAX );
+    construct(arr,segtree,0,n-1,0);
+    return segtree;
+}
+ 
+ int RMQ1(int st[] ,int low, int high, int a, int b,int pos)
+{
+    if(b<low || a>high)
+        return INT_MAX;
+    if(a<=low && b>=high)
+        return st[pos];
+    int mid=low+((high-low)/2);
+    return min(RMQ1(st,low,mid,a,b,2*pos+1),RMQ1(st,mid+1,high,a,b,2*pos+2));
+}
+int RMQ(int st[] , int n, int a, int b)
+{
+    return RMQ1(st,0,n-1,a,b,0);
+}
+
+/*
+--input--
+1
+4
+1 2 3 4
+2
+0 2 2 3
+
+--output--
+
+3=1
+4=2
+1=1
+5=3
+6=4
+2=3
+0=1
+1 3 
+*/

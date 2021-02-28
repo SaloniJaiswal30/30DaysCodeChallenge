@@ -1,0 +1,51 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int knapSack1(int W, int wt[], int val[], int n, int **m) 
+{ 
+    if(n<0 ||W<0)
+        return 0;
+    if(m[n][W]!=-1)
+        return m[n][W];
+    if(wt[n]<=W)
+        return m[n][W]=max(val[n]+knapSack1(W-wt[n], wt, val, n-1,m) ,knapSack1(W, wt, val, n-1,m) );
+    return m[n][W]=knapSack1(W, wt, val, n-1,m); 
+}
+int knapSack(int W, int wt[], int val[], int n) 
+{ 
+    int** dp;
+    dp = new int*[n];
+    for (int i = 0; i < n; i++)
+        dp[i] = new int[W + 1];
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < W + 1; j++)
+            dp[i][j] = -1;
+    return knapSack1(W, wt, val, n-1,dp); 
+}
+
+int main()
+ {
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int n, w;
+        cin>>n>>w;
+        
+        int val[n];
+        int wt[n];
+        
+        //inserting the values
+        for(int i=0;i<n;i++)
+            cin>>val[i];
+        
+        //inserting the weights
+        for(int i=0;i<n;i++)
+            cin>>wt[i];
+        
+        //calling method knapSack()
+        cout<<knapSack(w, wt, val, n)<<endl;
+        
+    }
+	return 0;
+}  

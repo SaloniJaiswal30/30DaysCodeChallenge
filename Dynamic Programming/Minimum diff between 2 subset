@@ -1,0 +1,75 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution{
+
+	public:
+	int minDiffernce(int arr[], int n) 
+	{ 
+	    if(n==1)
+	        return arr[0];
+	    int sum=0;
+	    for(int i=0;i<n;i++){
+	        sum+=arr[i];
+	    }
+	    bool a[n+1][sum+1];
+	    for(int i=0;i<n+1;i++){
+	        for(int j=0;j<sum+1;j++){
+	            if(i==0)
+	                a[i][j]=false;
+	            if(j==0)
+	                a[i][j]=true;
+	        }
+	    }
+	    int i,j;
+	    vector<bool> v1;
+	    for(int i=1;i<n+1;i++){
+	        for(int j=1;j<sum+1;j++){
+	            if(arr[i-1]<=j)
+	                a[i][j]=a[i-1][j-arr[i-1]] || a[i-1][j];
+	            else
+	                a[i][j]=a[i-1][j];
+	           if(i==n && j<=(sum/2)){
+	               v1.push_back(a[i][j]);
+	              // cout<<j<<" ";
+	           }
+	        }
+	    }
+	   // cout<<"\n"<<sum<<"\n";
+	    int mini=INT_MAX;
+	    for(int i=0;i<v1.size();i++){
+	        if(v1[i] && mini>abs(sum-(2*(i+1)))){
+	            mini=abs(sum-(2*(i+1)));
+	           // cout<<mini<<" "<<i<<"\n";
+	        }
+	    }
+	    return mini;
+	} 
+};
+
+int main() 
+{
+   	int t;
+    cin >> t;
+    while (t--)
+    {
+        int n;
+        cin >> n;
+
+        int a[n];
+        for(int i = 0; i < n; i++)
+        	cin >> a[i];
+
+	    Solution ob;
+	    cout << ob.minDiffernce(a, n) << "\n";
+	     
+    }
+    return 0;
+}  
+/*
+--input--
+5
+20 19 18 20 16
+--ouptut--
+13
+*/

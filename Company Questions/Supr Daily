@@ -1,0 +1,97 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+map<pair<string,string>,int> warehousLimit;
+map<string,int> categoryQuantityLimit;
+class InputRequest{
+    public:
+    int itemid;
+    string itemName;
+    string category;
+    int quantity;
+    
+};
+class OrderRequest{
+    public:
+    string customerId;
+    string WarehouseId;
+    string Date;
+    vector<InputRequest> items;
+    bool canfulfil;
+    void OrderFulfilmentService();
+    bool canFulfilOrder();
+};
+void setthreshold(){
+    categoryQuantityLimit.insert({"F_N_V",15});
+    categoryQuantityLimit.insert({"Dairy",16});
+    categoryQuantityLimit.insert({"snacks",35});
+    warehousLimit.insert({make_pair("1000","apple"),100});
+    warehousLimit.insert({make_pair("1000","mango"),200});
+    warehousLimit.insert({make_pair("1001","banana"),300});
+    warehousLimit.insert({make_pair("1001","apple"),150});
+}
+
+void OrderRequest::OrderFulfilmentService(){
+    canfulfil=true;
+    for(int i=0;i<items.size();i++){
+       if(categoryQuantityLimit[items[i].category]<items[i].quantity){
+            canfulfil=false;
+            break;
+       }
+       else{
+           categoryQuantityLimit[items[i].category]-=items[i].quantity;
+            cout<<"remaining limit for category "<<items[i].category<<" : "<<categoryQuantityLimit[items[i].category]<<"\n";
+
+       }
+    }
+    if(canfulfil){
+        for(int i=0;i<items.size();i++){
+            if(warehousLimit[make_pair(WarehouseId,items[i].itemName)]<items[i].quantity){
+               canfulfil=false; 
+               break;
+            }
+            else{
+                warehousLimit[make_pair(WarehouseId,items[i].itemName)]-=items[i].quantity;
+                cout<<"remaining "<<items[i].itemName<< " in warehouse id "<<WarehouseId<<" : "<<warehousLimit[make_pair(WarehouseId,items[i].itemName)]<<"\n";
+            }
+        }  
+    }
+}
+bool OrderRequest::canFulfilOrder(){
+    return canfulfil;
+}
+int main() {
+    setthreshold();
+	OrderRequest ort;
+	cin>>ort.customerId>>ort.WarehouseId>>ort.Date;
+	int input;
+	while (cin >> input)  {
+	    InputRequest irt;
+	    irt.itemid=input;
+	    cin>>irt.itemName>>irt.category>>irt.quantity;
+	    ort.items.push_back(irt);
+	}
+	ort.OrderFulfilmentService();
+	cout<<"Order request can be fulfilled : "<<ort.canFulfilOrder();
+	return 0;
+}
+/*
+--input--
+1000
+1000
+345
+1
+apple
+F_N_V
+5
+2
+mango
+F_N_V
+5
+--output--
+remaining limit for category F_N_V : 10
+remaining limit for category F_N_V : 5
+remaining apple in warehouse id 1000 : 95
+remaining mango in warehouse id 1000 : 195
+Order request can be fulfilled : 1
+*/

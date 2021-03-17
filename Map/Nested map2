@@ -1,0 +1,32 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+	map<int, map<string,map<string,int>>> m1;
+	int entry;
+	cin>>entry;
+	for(int i=0;i<entry;i++){
+	    int shop_no,fruit_count,cost;
+	    string fruit,color;
+	    cin>>shop_no>>fruit>>color>>cost;
+	    m1[shop_no][fruit][color]=cost;
+	}
+	int shop;
+	string fruit,color;
+	cin>>shop>>fruit>>color;
+	cout<<m1[shop][fruit][color];
+	return 0;
+}
+
+/*
+--input--
+5
+4 mango yellow 20
+9 apple red 30
+7 pineapple yellow 45
+1 apple red 30
+6 orange orange 78
+7 pineapple yellow
+--output--
+45
+*/

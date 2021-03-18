@@ -1,0 +1,86 @@
+#include<bits/stdc++.h>
+const int mod=1e9+7;
+using namespace std;
+
+void lps(int,int,string, string);
+
+int main()
+{
+    int t,n,k,x,y;
+    
+    cin>>t;
+    while(t--)
+    {
+        cin>>x>>y;          // Take size of both the strings as input
+        string s1,s2;
+        cin>>s1>>s2;        // Take both the string as input
+        
+        lps(x, y,s1,s2);
+    }
+    return 0;
+}
+
+void lps(int x, int y,string s1, string s2){
+    int a[x+1][y+1];
+    for(int i=0;i<x+1;i++){
+        for(int j=0;j<y+1;j++){
+            if(i==0 || j==0)
+                a[i][j]=0;
+        }
+    }
+    for(int i=1;i<x+1;i++){
+        for(int j=1;j<y+1;j++){
+            if(s1[i-1]==s2[j-1])
+                a[i][j]=1+a[i-1][j-1];
+            else
+                a[i][j]=max(a[i-1][j],a[i][j-1]);
+            
+        }
+    }
+    
+    cout<<"length of subsequence:"<<a[x][y]<<"\n";
+    int i=x, j=y;
+    string s="";
+    
+    while(i>0 && j>0){
+        if(s1[i-1]==s2[j-1]){
+            s=s+s1[i-1];
+            i--;
+            j--;
+        }
+        else{
+            if(a[i-1][j]<a[i][j-1]){
+                s=s+s2[j-1];
+                j--;
+            }
+            else{
+                s=s+s1[i-1];
+                i--;
+            }
+        }
+            
+    }
+    while(i>0){
+        s=s+s1[i-1];
+        i--;
+    }
+    while(j>0){
+        s=s+s2[j-1];
+        j--;
+    }
+    reverse(s.begin(),s.end());
+    cout<<"sommon subsequence:"<<s;
+}
+
+/*
+--input--
+1
+6
+7
+AGGTAB
+GXTXAYB
+--output--
+length of subsequence:4
+sommon subsequence:AGXGTXAYB
+
+*/

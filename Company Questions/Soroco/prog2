@@ -1,0 +1,88 @@
+/*
+A secret language is a derived language in which every English alphabet is replaced by another string.
+
+For example, there could be some language in which
+
+a maps to “.-”
+b maps to “-…”
+c maps to “-.-.”
+d maps to “-..”
+Any word in a secret language can be written as a concatenation of the secret code of each letter. e.g. “bad” can be written as “-….–..”. Let this new string be called a secret code of the string “bad”.
+
+Given a list of words, return the number of unique secret codes that can be found in our list.
+
+Input: The function compute_distinct_homonyms takes two arguments. The arguments are:
+
+1. secret_mapping: A list containing 26 strings in which each string maps to its respective character in a-z.
+
+2. word_list: List of words we wish to transform into the secret language.
+
+Output: Integer showing the number of distinct strings when the words are mapped to our secret language.
+
+Example: 
+
+Input
+secret_mapping = [“b”, “b”, “d”, “d”, “f”, “f”, “f”, “h”, “j”, “j”, “l”, “l”, “n”, “n”, “p”, “p”, “r”, “r”, “t”, “t”, “v”, “v”, “x”, “x”, “z”, “z”]
+word_list = [“food”, “good”, “zap”, “yap”]
+Output:
+2
+Explanation:
+In the above question,
+a maps to b,
+b maps to b,
+c maps to d and so on.
+
+In our new language,
+food   means  fppd
+good  means fppd
+zap     means zbp
+yap     means zbp
+
+Thus, there are 2 distinct words when the original words are mapped to our secret language.
+*/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int unique_words(map<string,string> m1,vector<string> v){
+    set<string,greater<string>> s;
+    for(int i=0;i<v.size();i++){
+        string tmp="";
+        for(int j=0;j<v[i].size();j++){
+            tmp=tmp+m1[to_string(v[i][j])];
+        }
+        cout<<tmp<<" ";
+        s.insert(tmp);
+    }
+    return s.size();
+}
+
+int main(){
+    map<string,string> m1;
+    vector<string> v;
+    
+    for(int i=0;i<26;i++){
+        char c='a'+i;
+        string tmp;
+        cin>>tmp;
+        m1[to_string(c)]=tmp;
+    }
+    string tmp;
+    while(cin>>tmp){
+        v.push_back(tmp);
+    }
+    cout<< unique_words(m1,v);
+    return 0;
+}
+
+/*
+--input--
+b b d d f f f h j j i i n n p p r r t t v v x x z z
+food
+good
+zap
+yap
+--output--
+fppd fppd zbp zbp 2
+
+*/

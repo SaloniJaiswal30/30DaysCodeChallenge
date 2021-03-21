@@ -1,0 +1,66 @@
+/*
+N jars, each containing a certain number of cookies, are placed in a line. You can pick any jar and eat all the cookies in it. However, you are not allowed to pick any two consecutive jars.
+
+Given a list of non-negative integers representing the number of cookies in each jar, determine the maximum number of cookies that you can eat under the constraint.
+
+CONSTRAINTS
+The number of cookies in any jar is between 0 and 10,000
+The number of cookie jars is less than 10,000
+Return a single integer denoting the maximum number of cookies that you can eat.
+
+EXAMPLES
+
+Example 1:
+
+Input: [10,20,30,10]
+
+Output: 40
+
+Explanation:
+Eat cookies from jars 1 (containing 10 cookies) and 3 (containing 30 cookies).
+Hence, total number of cookies eaten = 10 + 30 = 40
+Example 2:
+
+Input: [12, 27, 19, 13, 11]
+
+Output: 42
+
+Explanation:
+Eat cookies from jars 1 (containing 12 cookies), 3 (containing 19 cookies), and 5 (containing 11 cookies).
+Hence, total number of cookies eaten = 12 + 19 + 11 = 42
+*/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int count_cookies(vector<int> v){
+    if(v.size()<=0)
+        return 0;
+    int exclude=0;
+    int include=v[0];
+    int exclude_new;
+    for(int i=1;i<v.size();i++){
+        exclude_new=(exclude>include)?exclude:include;
+        include=exclude+v[i];
+        exclude=exclude_new;
+    }
+    return (exclude>include)?exclude:include;
+}
+
+int main(){
+    vector<int> v;
+    
+    int tmp;
+    while(cin>>tmp){
+        v.push_back(tmp);
+    }
+    cout<< count_cookies(v);
+    return 0;
+}
+
+/*
+--input--
+12 27 19 13 11
+--output--
+42
+*/

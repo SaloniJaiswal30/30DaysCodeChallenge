@@ -1,0 +1,84 @@
+/*
+You are given an N * M board containing O’s and X’s. An O denotes empty space while an X denotes that a lego block is placed at that location.
+
+Two lego blocks are connected if they share an edge (must be adjacent horizontally or vertically, diagonals don’t count). A group of connected lego blocks which cannot be further extended by including any other connected lego block is called a lego wall.
+
+Return the number of lego walls on the board.
+
+EXAMPLES
+Example 1:
+
+XOOXOOO
+XXOOOXO
+OXOOOXO
+
+This has the following 3 lego walls:
+(i)  X
+     X X
+       X
+(ii)
+      X
+(iii)
+      X
+      X
+Example 2:
+
+XOXOXX
+XOOXOO
+
+This has 4 lego walls:
+(i)
+X
+X
+
+(ii)
+X
+
+(iii)
+X
+
+(iv)
+X X
+*/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int Number_of_walls(vector<string> v){
+    int result=0;
+    for(int i=0;i<v.size();i++){
+        for(int j=0;j<v[i].size();j++){
+            if(v[i][j]=='X'){
+                if(((i-1)>=0 && v[i-1][j]=='1') || ((i+1)<v.size() && v[i+1][j]=='1') || ((j-1)>=0 && v[i][j-1]=='1') || ((j+1)<v.size() && v[i][j+1]=='1'))
+                 { 
+                     v[i][j]='1';
+                 }
+                else{
+                    v[i][j]='1';
+                    result++;
+                }
+                
+            }
+        }
+    }
+    return result;
+}
+
+int main(){
+    vector<string> v;
+    string tmp;
+    while(cin>>tmp){
+        v.push_back(tmp);
+    }
+    cout<< Number_of_walls(v);
+    return 0;
+}
+
+/*
+--input--
+XOOXOOO
+XXOOOXO
+OXOOOXO
+--output--
+3
+*/

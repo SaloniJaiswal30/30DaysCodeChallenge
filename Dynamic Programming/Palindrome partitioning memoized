@@ -1,0 +1,78 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution{
+public:
+    int  t[501][501];
+    bool isPalindrome(int i, int j,string String )
+    {
+        while(i < j)
+        {
+          if(String[i] != String[j])
+            return false;  
+          i++;
+          j--;
+        }
+        return true;
+    }
+    int solve(int i,int j,string str){
+        if(i>=j)
+            return 0;
+        int tmp;
+        int res=INT_MAX;
+        if(t[i][j]!=-1)
+            return t[i][j];
+        if(isPalindrome(i,j,str))
+            return 0;
+        int left,right;
+        for(int k=i;k<j;k++){
+            if(t[i][k]!=-1)
+                left=t[i][k];
+            else{
+                left=solve(i,k,str);
+                t[i][k]=left;
+                
+            }
+            if(t[k+1][j]!=-1)
+                right=t[k+1][j];
+            else{
+                right=solve(k+1,j,str);
+                t[k+1][j]=right;
+                
+            }
+            tmp= left+right+1;
+             //cout<<tmp<<" ";
+            if(tmp<res)
+                res=tmp;
+        }
+        t[i][j]=res;
+        //cout<<"\n";
+        return res;
+    }
+    int palindromicPartition(string str)
+    {
+        memset(t,-1,sizeof(t));
+       return solve(0,str.size()-1,str);
+    }
+};
+
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+        string str;
+        cin>>str;
+        
+        Solution ob;
+        cout<<ob.palindromicPartition(str)<<"\n";
+    }
+    return 0;
+}  
+
+/*
+--input--
+1
+ababbbabbababa
+--output--
+3
+*/

@@ -1,0 +1,63 @@
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution{
+public:
+    //int res;
+    bool isPalindrome(int i, int j,string String )
+    {
+        while(i < j)
+        {
+          if(String[i] != String[j])
+            return false;  
+          i++;
+          j--;
+        }
+        return true;
+    }
+    int solve(int i,int j,string str){
+        if(i>=j)
+            return 0;
+        int tmp;
+        int res=INT_MAX;
+        if(isPalindrome(i,j,str))
+            return 0;
+        for(int k=i;k<j;k++){
+             tmp= solve(i,k,str)+solve(k+1,j,str)+1;
+             //cout<<tmp<<" ";
+             if(tmp<res)
+                res=tmp;
+        }
+        //cout<<"\n";
+        return res;
+    }
+    int palindromicPartition(string str)
+    {
+        
+       return solve(0,str.size()-1,str);
+    }
+};
+
+
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+        string str;
+        cin>>str;
+        
+        Solution ob;
+        cout<<ob.palindromicPartition(str)<<"\n";
+    }
+    return 0;
+}  
+
+
+/*
+--input--
+1
+ababbbabbababa
+--output--
+3
+*/

@@ -1,0 +1,47 @@
+// { Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution{
+    public:
+    int longestKSubstr(string s, int k) {
+        map<char,int> m1;
+        int j=0;
+        int mx=-1;
+        for(int i=0;i<s.length();i++){
+            m1[s[i]]++;
+           
+             if(m1.size()==k && (i-j+1) >mx){
+                mx=i-j+1;
+            }
+            else if(m1.size()>k){
+                m1[s[j]]--;
+                if(m1[s[j]]==0)
+                    m1.erase(s[j]);
+                j++;
+            }
+        }
+        return mx;
+    }
+};
+
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        string s;
+        cin >> s;
+        int k;
+        cin >> k;
+        Solution ob;
+        cout << ob.longestKSubstr(s, k) << endl;
+    }
+}
+/*
+--input--
+aabacbebebe
+3
+--output--
+7
+*/

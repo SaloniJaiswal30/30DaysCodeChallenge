@@ -1,0 +1,55 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution{
+    public:
+    int lenOfLongSubarr(int A[],  int N, int K) 
+    { 
+        int sum=0;
+        int maxlen=0;
+        map<int,int> m1;
+        for(int i=0;i<N;i++){
+            sum=sum+A[i] ;
+            
+            if(sum==K)
+                maxlen=i+1;
+            if(m1.find(sum)==m1.end())
+                m1[sum]=i;
+            if(m1.find(sum-K)!=m1.end()){
+                if(maxlen<i-m1[sum-K])
+                    maxlen=i-m1[sum-K];
+            }
+        }
+        return maxlen;
+    } 
+
+};
+
+int main() {
+	//code
+	
+	int t;cin>>t;
+	while(t--)
+	{
+	    int n, k;
+	    cin>> n >> k;
+	    int a[n];
+	    
+	    for(int i=0;i<n;i++)
+	        cin>>a[i];
+	   Solution ob;
+	   cout << ob.lenOfLongSubarr(a, n , k)<< endl;
+	    
+	}
+	
+	return 0;
+}  
+
+/*
+--input--
+6 16
+1 4 3 3 5 5
+--output--
+5
+
+*/

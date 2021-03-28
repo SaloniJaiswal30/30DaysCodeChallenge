@@ -1,0 +1,43 @@
+#include <bits/stdc++.h> 
+using namespace std;
+
+map<string,int> m1;
+int isScramble(const string A, const string B) {
+    if(A.length()!=B.length())
+        return 0;
+    if(A=="" && B=="")
+        return 1;
+    if(A.compare(B)==0)
+        return 1;
+  
+    if(A.length()<=1)
+        return 0;
+    string tmp=A+" "+B;
+    if(m1.find(tmp)!=m1.end())
+        return m1[tmp];
+    int n=A.size();
+    int flag=0;
+    for(int i=1;i<n;i++){
+        if((isScramble(A.substr(0,i),B.substr(n-i,i))==true && isScramble(A.substr(i,n-i),B.substr(0,n-i))==true)|| (isScramble(A.substr(0,i),B.substr(0,i))==true && isScramble(A.substr(i,n-i),B.substr(i,n-i))==true))
+        {   
+            flag=1;
+            break;
+        }
+    }
+    m1[tmp]=flag;
+    return flag;   
+}
+int main() {
+    string a,b;
+    cin>>a>>b;
+    cout<<isScramble(a,b);
+	return 0;
+}
+
+/*
+--input--
+great
+eatgr
+--output--
+1
+*/

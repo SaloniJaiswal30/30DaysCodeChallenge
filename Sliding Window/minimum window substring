@@ -1,0 +1,59 @@
+#include <bits/stdc++.h> 
+using namespace std;
+
+map<char,int> m1;
+int count1=0;
+string res="";
+string minWindow(string s, string t) {
+    if(s.length()<t.length())
+        return "";
+    for(int i=0;i<t.size();i++){
+        if(m1.find(t[i])==m1.end())
+            count1++;
+        m1[t[i]]++;
+    }
+    int j=0;
+    int max=s.length();
+    int i;
+    for(i=0;i<s.size();i++){
+        if(m1.find(s[i])!=m1.end()){
+            m1[s[i]]--;
+            if(m1[s[i]]==0)
+                count1--;
+        }
+        while(count1==0){
+            if(max>(i-j+1)){
+                max=i-j+1;
+                res=s.substr(j,i-j+1);
+            }
+            if(m1.find(s[j])!=m1.end()){
+                m1[s[j]]++;
+                if(m1[s[j]]==1)
+                    count1++;
+                
+            }
+            j++;
+        }
+    }
+    if(max>=(i-j+1)){
+        max=i-j+1;
+        res=s.substr(j-1,i-j+1);
+    }
+    return res; 
+}
+
+int main() {
+    string a,b;
+    cin>>a>>b;
+    cout<<minWindow(a,b);
+	return 0;
+}
+
+/*
+--input--
+ADOBECODEBANC
+ABC
+--output--
+BANC
+
+*/

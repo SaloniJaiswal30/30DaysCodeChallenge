@@ -1,0 +1,54 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+
+class Solution{
+    public:
+    int a[201][201];
+    int eggDrop1(int n, int k) 
+    {
+        if(k==0 || k==1)
+            return k;
+        if(n==1)
+            return k;
+        if(a[n][k]!=-1)
+            return a[n][k];
+        int tmp=INT_MAX;
+        for(int i=1;i<=k;i++){
+            int mn=1+max(eggDrop1(n-1,i-1),eggDrop1(n,k-i));
+            if(mn<tmp)
+                tmp=mn;
+            
+        }
+        a[n][k]=tmp;
+        return tmp;
+    }
+    int eggDrop(int n, int k) 
+    {
+        memset(a,-1,sizeof(a));
+        return eggDrop1(n,k);
+    }
+};
+
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        //taking eggs and floors count
+        int n, k;
+        cin>>n>>k;
+        Solution ob;
+        //calling function eggDrop()
+        cout<<ob.eggDrop(n, k)<<endl;
+    }
+    return 0;
+}
+/*
+--input--
+1
+2 10
+--output--
+4
+*/

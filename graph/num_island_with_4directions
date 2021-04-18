@@ -1,0 +1,83 @@
+
+#include<bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    int numIslands(vector<vector<char>>& grid) {
+      
+        int visited[grid.size()][grid[0].size()];
+        memset(visited,0,sizeof(visited));
+        
+        int count=0;
+        for(int i =0;i<grid.size();i++){
+            for(int j=0;j<grid[i].size();j++){
+               
+                if(visited[i][j]==0 && grid[i][j]=='1'){
+                    queue<pair<int,int>> q;
+                    pair<int,int> p;
+                    q.push(make_pair(i,j));
+                    visited[i][j]=1;
+                    count++;
+                    while(!q.empty()){
+                        p=q.front();
+                        q.pop();
+                        if((p.first+1)<grid.size() && grid[p.first+1][p.second]=='1' && visited[p.first+1][p.second]==0){
+                            q.push(make_pair(p.first+1,p.second));
+                            visited[p.first+1][p.second]=1;
+                           
+                        }
+                        if((p.first-1)>=0 && grid[p.first-1][p.second]=='1' && visited[p.first-1][p.second]==0){
+                            q.push(make_pair(p.first-1,p.second));
+                            visited[p.first-1][p.second]=1;
+                         
+                        }
+                        if((p.second+1)<grid[0].size() && grid[p.first][p.second+1]=='1' && visited[p.first][p.second+1]==0){
+                            q.push(make_pair(p.first,p.second+1));
+                            visited[p.first][p.second+1]=1;
+                           
+                        }
+                        if((p.second-1)>=0 && grid[p.first][p.second-1]=='1' && visited[p.first][p.second-1]==0){
+                            q.push(make_pair(p.first,p.second-1));
+                            visited[p.first][p.second-1]=1;
+                            
+                        }
+                    }
+                }
+                
+            }
+        }
+        return count;
+    }
+};
+
+int main(){
+	int tc;
+	cin >> tc;
+	while(tc--){
+		int n, m;
+		cin >> n >> m;
+		vector<vector<char>>grid(n, vector<char>(m, '#'));
+		for(int i = 0; i < n; i++){
+			for(int j = 0; j < m; j++){
+				cin >> grid[i][j];
+			}
+		}
+		Solution obj;
+		int ans = obj.numIslands(grid);
+		cout << ans <<'\n';
+	}
+	return 0;
+}  
+
+/*
+--input--
+4 2
+0 1
+1 0
+1 1
+1 0
+--output--
+2
+
+*/

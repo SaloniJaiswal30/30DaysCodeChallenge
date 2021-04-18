@@ -1,0 +1,67 @@
+
+#include<bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    vector<int> t;
+    int a[10000];
+    
+	void dfsOfGraph1(int V, vector<int> adj[],int j){
+	   if(a[j]==1)
+	        return;
+	   t.push_back(j);
+	   a[j]=1;
+	   for(int i=0;i<adj[j].size();i++){
+
+	       dfsOfGraph1(V, adj,adj[j][i]);
+	   }
+	}
+	vector<int>dfsOfGraph(int V, vector<int> adj[]){
+	    // Code here
+	    vector<int> v1;
+	    memset(a,0,sizeof(a));
+	    dfsOfGraph1(V, adj,0);
+	    return t;
+	    
+	}
+};
+
+int main(){
+	int tc;
+	cin >> tc;
+	while(tc--){
+		int V, E;
+    	cin >> V >> E;
+
+    	vector<int> adj[V];
+
+    	for(int i = 0; i < E; i++)
+    	{
+    		int u, v;
+    		cin >> u >> v;
+    		adj[u].push_back(v);
+    		adj[v].push_back(u);
+    	}
+        // string s1;
+        // cin>>s1;
+        Solution obj;
+        vector<int>ans=obj.dfsOfGraph(V, adj);
+        for(int i=0;i<ans.size();i++){
+        	cout<<ans[i]<<" ";
+        }
+        cout<<endl;
+	}
+	return 0;
+}  
+
+/*
+--Input--
+5 4
+0 1 
+0 2
+0 3 
+2 4
+--output--
+0 1 2 4 3 
+*/

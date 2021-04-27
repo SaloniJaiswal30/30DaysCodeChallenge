@@ -1,0 +1,60 @@
+
+#include<bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    bool valid(int a,int b,int N){
+        if(a>=0 && b>=0 && a<=N && b<=N)
+            return true;
+        return false;
+    }
+	int minStepToReachTarget(vector<int>&KnightPos, vector<int>&TargetPos, int N){
+	    // Code here
+	    int visited[N+1][N+1];
+	    int val[N+1][N+1];
+	    memset(visited,0,sizeof(visited));
+	    memset(val,0,sizeof(val));
+	    queue<pair<int,int>> q1;
+	    q1.push(make_pair(KnightPos[0],KnightPos[1]));
+	    int x[8]={-1,-1,1,1,2,2,-2,-2};
+	    int y[8]={-2,2,-2,2,-1,1,-1,1};
+	    while(!q1.empty()){
+	        int fx=q1.front().first;
+	        int fy=q1.front().second;
+	        visited[fx][fy]=1;
+	        q1.pop();
+	        //cout<<"- "<<fx<<" "<<fy<<"\n";
+	        for(int i=0;i<8;i++){
+	            //cout<<fx+x[i]<<" "<<fy+y[i]<<"\n";
+	            if(valid(fx+x[i],fy+y[i],N) && visited[fx+x[i]][fy+y[i]]==0){
+	                val[fx+x[i]][fy+y[i]]=val[fx][fy]+1;
+	                q1.push(make_pair(fx+x[i],fy+y[i]));
+	                visited[fx+x[i]][fy+y[i]]=1;
+	            
+    	            if(fx+x[i]==TargetPos[0] && fy+y[i]==TargetPos[1])
+    	                return val[fx+x[i]][fy+y[i]];
+	            }
+	        }
+	    }
+	    return 0;
+	}
+};
+
+
+int main(){
+	int tc;
+	cin >> tc;
+	while(tc--){
+		vector<int>KnightPos(2);
+		vector<int>TargetPos(2);
+		int N;
+		cin >> N;
+		cin >> KnightPos[0] >> KnightPos[1];
+		cin >> TargetPos[0] >> TargetPos[1];
+		Solution obj;
+		int ans = obj.minStepToReachTarget(KnightPos, TargetPos, N);
+		cout << ans <<"\n";
+	}
+	return 0;
+}  

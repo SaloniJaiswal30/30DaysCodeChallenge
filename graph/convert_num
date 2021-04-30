@@ -1,0 +1,42 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int m,n;
+	cin>>m>>n;
+	queue<int> q;
+	q.push(m);
+    map<int,int> m1;
+    m1[m]=0;
+	while(!q.empty()){
+	    int temp=q.front();
+	    q.pop();
+	    
+	    int var1,var2;
+	    var1=temp*2;
+	    
+	    var2=temp-1;
+	    if(m1.find(var1) == m1.end()){
+	        m1[var1]=m1[temp]+1;
+	        q.push(var1);
+	    }
+	    if(m1.find(var2) == m1.end()){
+	        m1[var2]=m1[temp]+1;
+	        q.push(var2);
+	    }
+	    if(var1==n || var2==n){
+	        cout<<m1[temp]+1;
+	        break;
+	    }
+	    
+	}
+	return 0;
+}
+
+/*
+--input--
+10 1
+--output--
+9
+*/

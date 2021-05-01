@@ -1,0 +1,60 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int n,m;
+	cin>>n>>m;
+	vector<vector<int>> v;
+	int arr[n][m];
+	memset(arr,0,sizeof(arr));
+	queue<pair<int,int>> q;
+	for(int i=0;i<n;i++){
+	    vector<int> v1;
+ 	    for(int j=0;j<m;j++){
+	        int tmp;
+	        cin>>tmp;
+	        if(tmp==1){
+	            q.push(make_pair(i,j));
+	            arr[i][j]=1;
+	        }
+	        v1.push_back(tmp);
+	    }
+	    v.push_back(v1);
+	}
+	int x[4]={-1,1,0,0};
+	int y[4]={0,0,-1,1};
+	while(!q.empty()){
+	    int f1=q.front().first;
+	    int f2=q.front().second;
+	    q.pop();
+	    for(int k=0;k<4;k++){
+	        if(f1+x[k]>=0 && f1+x[k]<n && f2+y[k]>=0 && f2+y[k]<m && arr[f1+x[k]][f2+y[k]]==0 ){
+	            q.push(make_pair(f1+x[k],f2+y[k]));
+	            v[f1+x[k]][f2+y[k]]=v[f1][f2]+1;
+	            arr[f1+x[k]][f2+y[k]]=1;
+	        }
+	    }
+	    
+	}
+	for(int i=0;i<n;i++){
+ 	    for(int j=0;j<m;j++){
+	        cout<<v[i][j]-1<<" ";
+	    }
+	    cout<<"\n";
+	}
+	return 0;
+}
+
+/*
+--input--
+3 4
+0 0 0 1
+0 0 1 1
+0 1 1 0
+--output--
+3 2 1 0 
+2 1 0 0 
+1 0 0 1 
+
+*/

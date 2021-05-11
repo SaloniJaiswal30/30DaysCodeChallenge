@@ -1,0 +1,39 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class singleton_{
+    static singleton_ *obj;
+    int data;
+    singleton_(){
+        //private constructor, so that we can't create an object.
+    }
+    public:
+    static singleton_ *create_obj(){
+        if(!obj)
+            obj=new singleton_;
+        return obj;
+    }
+    void check(){
+        data=100;
+        cout<<"singleton class function called\n";
+    }
+    void update(){
+        cout<<data<<"\n";
+    }
+};
+singleton_ *singleton_ :: obj=0;
+
+int main(){
+    singleton_ *ob=ob->create_obj();
+    ob->check();
+    ob->update();
+    singleton_ *ob1=ob1->create_obj(); //getting reference of first oject 
+    ob1->update(); 
+    return 0;
+}
+/*
+--output--
+singleton class function called
+100
+100
+*/

@@ -1,0 +1,39 @@
+#include <iostream>
+using namespace std;
+class complex{
+    int x,y;
+    public:
+    complex(int a, int b){
+        x=a;
+        y=b;
+    }
+    complex(){}
+    void display();
+    complex operator+(complex c1){
+        cout<<"operator overloading\n";
+        complex c3;
+        c3.x=c1.x+x;
+        c3.y=c1.y+y;
+        return c3;
+    }
+};
+void complex ::display(){
+    cout<<x<<" "<<y<<"\n";
+}
+int main() {
+    complex c1(2,4);
+    complex c2(4,5);
+    complex c3;
+    c1.display();
+    c2.display();
+    c3=c1.operator+(c2);//c1+c2;
+    c3.display();
+	return 0;
+}
+/*
+--output--
+2 4
+4 5
+operator overloading
+6 9
+*/

@@ -1,0 +1,38 @@
+#include<iostream>
+using namespace std;
+class car{
+    public:
+    void wheeler(){
+        cout<<"4 wheeler\n";
+    }
+    virtual void price()=0;
+};
+class verna:public car{
+    public:
+    void price(){
+        cout<<"price verna:20lakhs\n";
+    }
+};
+class i10:public car{
+    public:
+    void price(){
+        cout<<"price i10:10lakhs\n";
+    }
+};
+int main(){
+    verna v;
+    i10 i;
+    v.wheeler();
+    v.price();
+    i.wheeler();
+    i.price();
+    return 0;
+}
+
+/*
+--output--
+4 wheeler
+price verna:20lakhs
+4 wheeler
+price i10:10lakhs
+*/

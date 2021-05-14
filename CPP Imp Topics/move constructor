@@ -1,23 +1,58 @@
 #include <iostream>
+#include <vector>
 using namespace std;
- 
-template<typename T>
-T fun_temp(T a,T b){
-    int t=a>b;
-    cout<<"template:"<<t<<"\n";
-    return 0;
-}
+
+class Move {
+    int *ptr;
+    public:
+    Move(){             //default constructor
+        cout<<"constructor\n";
+        ptr=new int;
+    }
+    Move( const Move &a){ // copy constructor
+        cout<<"copy constructor\n";
+        this->ptr=new int;
+    }
+    Move(Move &&a){      //mov constructor
+        cout<<"move constructor\n";
+        this->ptr=a.ptr;
+        a.ptr=nullptr;
+    }
+    ~Move(){
+        cout<<"destructor\n";
+    }
+};
 int main()
 {
-   fun_temp(5,6);
-   fun_temp('a','b');
-   fun_temp<int>(100,'a');
-   //fun_temp(100,'a');// this will give error as return type becomes ambigious
+    //Move();
+	vector<Move> vec;
+    vec.push_back(Move());
+    Move m1;
+    vec.push_back(m1);
+    Move m2;
+    vec.push_back(move(m2));
+	return 0;
 }
+
 
 /*
 --output--
-template:0
-template:0
-template:1
+constructor
+move constructor
+destructor
+constructor
+copy constructor
+copy constructor
+destructor
+constructor
+move constructor
+copy constructor
+copy constructor
+destructor
+destructor
+destructor
+destructor
+destructor
+destructor
+destructor
 */

@@ -1,0 +1,21 @@
+#include <iostream>
+using namespace std;
+ 
+void fun(string s){
+    cout<<s;
+}
+void fun_ptr_param(void (*ptr)(string)){
+    ptr("Second way to use function ptr(passing pointer)\n");
+}
+int main()
+{
+    void (*ptr)(string)=fun;
+    ptr("First way to use function ptr\n");
+    fun_ptr_param(fun);
+}
+
+/*
+--output--
+First way to use function ptr
+Second way to use function ptr(passing pointer)
+*/

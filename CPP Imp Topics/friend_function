@@ -1,0 +1,33 @@
+#include<iostream>
+using namespace std;
+class A{
+    int data;
+    friend class B; // can be private or public
+    public:
+    A(){
+        data=10;
+    }
+    void A_func(){
+        cout<<"A function data="<<data<<"\n";
+    }
+    
+};
+class B{
+    public:
+    void B_fun(){
+        A o;
+        o.A_func();// normally we can call this withour friend class
+        o.data=20;//private member only able to access by friend class
+        o.A_func();
+    }
+};
+
+int main(){
+    B obj;
+    obj.B_fun();
+    return 0;
+}
+/*
+A function data=10
+A function data=20
+*/

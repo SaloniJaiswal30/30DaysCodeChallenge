@@ -1,33 +1,35 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
+template<class X, class Y=char> // can be default type
 class A{
-    int data;
-    friend class B; // can be private or public
+    X a;
+    Y b;
     public:
-    A(){
-        data=10;
-    }
-    void A_func(){
-        cout<<"A function data="<<data<<"\n";
-    }
-    
-};
-class B{
-    public:
-    void B_fun(){
-        A o;
-        o.A_func();// normally we can call this withour friend class
-        o.data=20;//private member only able to access by friend class
-        o.A_func();
+    A(X a1, Y b1){
+        a=a1;
+        b=b1;
+        cout<<a <<" "<<b<<"\n";
+        
     }
 };
-
-int main(){
-    B obj;
-    obj.B_fun();
-    return 0;
+template<class T,int mx> //mx needs to be constant
+T fun_temp(T a,T b){
+    int allowed=0;
+    if(mx>18)
+        allowed=1;
+    cout<<b<<": "<<a<<"="<<allowed<<"\n";
+    return "check";
 }
+int main()
+{
+    A<int>(5,'s');
+    A<int,string>(6,"saloni");
+    fun_temp<string,50>("mommy","vaccine");
+}
+
 /*
-A function data=10
-A function data=20
+--output--
+5 s
+6 saloni
+vaccine: mommy-1
 */

@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+//lvalue, rvalue reference
+void fun(int &a){
+    cout<<"lvalue:"<<a<<"\n";
+}
+void fun(int const &a){
+    cout<<"lvalue or rvalue:"<<a<<"\n";
+}
+void fun(int &&a){ // this is having more imp than const &a, therefore this is called
+    cout<<"rvalue:"<<a<<"\n";
+}
+int main()
+{
+    int i=10;
+    int &x=i;         // lvalue reference=lvalue;
+    //int &t=i;       // this will give error as we can't assign lvalue to lvalue refernce
+    int const &t=10;  // we can assign lvalue and rvalue both if we add const
+    int &&t1=10;      // rvalue reference=rvalue
+    fun(i);
+    fun(10);
+    fun(move(i));     // move convert lvalue to rvalue;
+    return 0;
+}
+
+/*
+lvalue:10
+rvalue:10
+rvalue:10
+*/

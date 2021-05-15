@@ -1,0 +1,50 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void validpalindrome(string s){
+   // string t="";
+    int n=s.length();
+    int j=n-1;
+    int i=0;
+    int palindromic=1;
+    while(i<(n/2)-1)
+    {
+        int a=tolower(s[i]);
+        int b=tolower(s[j]);
+       // cout<<s[i]<<" "<<a<<" "<<s[j]<<" "<<b<<"\n";
+        if(a<97 || a>122 || b<97 || b>122)
+        {
+            if(b<97 || b>122)
+                j--;
+            if(a<97 || a>122)
+                i++;
+            continue;
+        }
+        else if(a!=b)
+        {
+            palindromic=0;
+            break;
+        }
+        i++;
+        j--;
+    }
+    cout<<palindromic;
+}
+
+int main(){
+    string s;
+    getline(cin,s);// as with normal cin we can't take a line having space in a string
+    cout<<s<<"\n";
+    validpalindrome(s);
+    return 0;
+}
+
+
+
+/*
+--input--
+A man, a plan, a canal: Panama.
+--output--
+A man, a plan, a canal: Panama.
+1
+*/

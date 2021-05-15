@@ -17,6 +17,8 @@ int main(){
 }
 
 /*
+--input--
+Reverse a line
 --output--
 Reverse a line
 enil a esreveR

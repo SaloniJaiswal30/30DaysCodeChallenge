@@ -1,0 +1,23 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void reverse(string s){
+    string t="";
+    for(int i=0;i<s.length();i++){
+        t=s[i]+t;
+    }
+    cout<<t;
+}
+
+int main(){
+    string s;
+    getline(cin,s);// as with normal cin we can't take a line having space in a string
+    cout<<s<<"\n";
+    reverse(s);
+}
+
+/*
+--output--
+Reverse a line
+enil a esreveR
+*/

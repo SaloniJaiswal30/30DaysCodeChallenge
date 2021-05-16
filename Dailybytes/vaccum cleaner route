@@ -1,0 +1,42 @@
+/*
+Question:
+This question is asked by Amazon. Given a string representing the sequence of moves a robot vacuum makes, return whether or not it will return to its original position. The string will only contain L, R, U, and D characters, representing left, right, up, and down respectively.
+
+Ex: Given the following strings...
+
+"LR", return true
+"URURD", return false
+"RUULLDRD", return true
+
+https://leetcode.com/problems/robot-return-to-origin/submissions/
+*/
+
+class Solution {
+public:
+    bool judgeCircle(string moves) {
+        int a[4]={0};
+        for(int i=0;i<moves.length();i++){
+            if(moves[i]=='U')
+                a[0]=a[0]+1;
+            else if(moves[i]=='D')
+                a[1]=a[1]+1;
+            else if(moves[i]=='L')
+                a[2]=a[2]+1;
+            else if(moves[i]=='R')
+                a[3]=a[3]+1;
+        }
+        if(a[0]==a[1] && a[2]==a[3])
+            return true;
+        else
+            return false;
+        
+    }
+};
+
+
+/*
+--input--
+URURD
+--output--
+false
+*/

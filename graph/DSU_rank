@@ -1,0 +1,97 @@
+#include <bits/stdc++.h>
+using namespace std;
+class dsu{
+    public:
+    class node{
+        public:
+           int data;
+           node *parent;
+           int rank;
+    };
+    map<int,node*> m1;
+    void makeset(int data){
+        //cout<<"makeset:"<<data<<"\n";
+        node *n=new node();
+        n->data=data;
+        n->parent=n;
+        n->rank=0;
+        m1[data]=n;
+    }
+    void unionset(int a,int b){
+        //cout<<"unionset:"<<a<<" "<<b<<"\n";
+        node *pa=m1[a];
+        node *pb=m1[b];
+        node *pa1=getparent(pa);
+        node *pb1=getparent(pb);
+        //cout<<pa1->data<<" "<<pb1->data<<"\n";
+        if(pa1==pb1){
+            return;
+        }
+        if(pa1->rank>=pb1->rank){
+            pb1->parent=pa1;
+            m1[pb1->data]=pa1;
+            //cout<<pb1->data<<" "<<m1[pb1->data]->data<<"\n";
+            if(pb1->rank==pa1->rank)
+                pa1->rank=pa1->rank+1;
+        }else{
+            pa1->parent=pb1;
+            m1[pa1->data]=pb1;
+        }
+        
+    }
+    node *getparent(node *a){
+        if(a==a->parent)
+            return a;
+        a->parent=getparent(a->parent);
+        return a;
+    }
+    void print(){
+        for(auto i=m1.begin();i!=m1.end();i++)
+            cout<<i->first<<" "<<i->second->data<<"\n";
+    }
+};
+int main() {
+    int n,v;
+    cin>>n>>v;
+    dsu d;
+    for (int i=0;i<v;i++){
+        int ver;
+        cin>>ver;
+        d.makeset(ver);
+    }
+	for (int i=0;i<n;i++){
+	    int a,b;
+	    cin>>a>>b;
+	    d.unionset(a,b);
+	}
+	d.print();
+	return 0;
+}
+
+/*
+--input--
+5 7
+0
+1
+2
+3
+4
+5
+6
+0 1
+1 2
+3 4
+2 4
+5 6
+--ouput--
+0 0
+1 0
+2 0
+3 0
+4 3
+5 5
+6 5
+
+
+
+*/

@@ -1,0 +1,46 @@
+/*
+Question:
+This question is asked by Microsoft. Given an array of strings, return the longest common prefix that is shared amongst all strings.
+Note: you may assume all strings only contain lowercase alphabetical characters.
+
+Ex: Given the following arrays...
+
+["colorado", "color", "cold"], return "col"
+["a", "b", "c"], return ""
+["spot", "spotty", "spotted"], return "spot"
+
+https://leetcode.com/problems/longest-common-prefix/
+*/
+
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+        string s="";
+        int n=strs.size();
+        int m=INT_MAX;
+        for(int i=0;i<n;i++){
+            if(strs[i].length()<m)
+                m=strs[i].length();
+        }
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(strs[0][i]!=strs[j][i]){
+                    return s;
+                }
+            }
+            s=s+strs[0][i];
+        }
+        return s;
+    }
+};
+
+
+
+
+
+/*
+--input--
+["flower","flow","flight"]
+--output--
+fl
+*/

@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+using namespace std;
+//set, multiset are immutable(can't modify)
+int main() {
+	set<int> s; //gives sorted non duplicate list
+	for(int i=0;i<5;i++){
+	    int t;
+	    cin>>t;
+	    s.insert(t);
+	}
+	for(auto i=s.begin();i!=s.end();i++){
+	    cout<<*i<<" ";
+	}
+	cout<<"\n";
+	multiset<int> m; //ascending allow duplicate and gives sorted
+	//multiset<int,greater<int>> for descending
+	for(int i=0;i<5;i++){
+	    int t;
+	    cin>>t;
+	    m.insert(t);
+	}
+	for(auto i=m.begin();i!=m.end();i++){
+	    cout<<*i<<" ";
+	}
+	cout<<"\n";
+	cout<<m.count(16)<<"\n";
+	//m.erase(16); this will delete all instance
+	//m.erase(m.find(16)) remove only 1 instance
+	return 0;
+}
+
+
+/*
+--input--
+34
+24
+167
+8
+24
+2
+5
+16
+3
+16
+--output--
+8 24 34 167 
+2 3 5 16 16 
+2
+*/

@@ -1,0 +1,76 @@
+//https://www.hackerearth.com/practice/data-structures/disjoint-data-strutures/basics-of-disjoint-data-structures/practice-problems/algorithm/city-and-fireman-vincent/
+
+#include<bits/stdc++.h>
+using namespace std;
+int vertex[1010];
+long long risk[1010];
+long long mod=1e9 + 7;
+int parent(int x){
+    if(x==vertex[x])
+        return x;
+    vertex[x]=parent(vertex[x]);
+    return vertex[x];
+}
+void findset(int x,int y){
+    //cout<<"findset\n";
+    int pa=parent(x);
+    int pb=parent(y);
+    if(pa==pb)
+        return;
+    vertex[pb]=pa;
+}
+
+void total_number_ways(int v){
+    long long ans=1;
+    long long count;
+    map<long long ,multiset<long long >> m1;
+    for(int i=1;i<v+1;i++){
+        m1[vertex[i]].insert(risk[i]);
+    }
+    for(auto i=m1.begin();i!=m1.end();i++){
+        long long low=*(i->second.begin());
+        count=i->second.count(low);
+        ans=(ans*count) % (mod);
+    }
+    cout<<ans;
+}
+int main()
+{
+    int v;
+    cin>>v;
+    
+    for(int i=1;i<v+1;i++){
+        long long tmp_risk;
+        cin>>tmp_risk;
+        risk[i]=tmp_risk;
+    }
+    for(int i=1;i<v+1;i++){
+        vertex[i]=i;
+    }
+    int e;
+    cin>>e;
+    for(int i=0;i<e;i++){
+        int x,y;
+        cin>>x>>y;
+        findset(x,y);
+    }
+    
+    for(int i=1;i<v+1;i++){
+       vertex[i]=parent(i);
+    }
+    
+    total_number_ways(v);
+    return 0;
+}
+
+
+/*
+--input1--
+4
+3 3 3 3
+2
+1 2
+4 1
+--output1--
+3
+*/

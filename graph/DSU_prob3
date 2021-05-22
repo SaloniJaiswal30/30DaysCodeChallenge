@@ -1,0 +1,65 @@
+//https://www.hackerearth.com/practice/data-structures/disjoint-data-strutures/basics-of-disjoint-data-structures/practice-problems/algorithm/city-and-soldiers/
+
+#include<bits/stdc++.h>
+using namespace std;
+vector<int> v;
+
+int parent(int a){
+    if(a==v[a])
+        return a;
+    v[a]=parent(v[a]);
+    return v[a];
+}
+void change_leader(int x){
+	int pa=parent(x);
+	v[pa]=x;
+	v[x]=x;
+}
+void findset(int x,int y){
+    int pa=parent(x);
+    int pb=parent(y);
+    if(pa==pb)
+       return;
+    v[pa]=pb;
+}
+
+int main()
+{
+    int n,q;
+    cin>>n>>q;
+    v.push_back(0);
+    for(int i=1;i<n+1;i++){
+        v.push_back(i);
+    }
+	for(int i=0;i<q;i++){
+		int check;
+		cin>>check;
+		switch(check){
+			int x,y;
+			case 1:
+				cin>>x>>y;
+				findset(x,y);
+                break;
+			case 2:
+				cin>>x;
+				change_leader(x);
+                break;
+			case 3:
+				cin>>x;
+				cout<<parent(x)<<"\n";
+                break;
+		}
+	}
+    return 0;
+}
+
+
+
+/*
+--input1--
+2 2
+1 1 2
+3 1
+--output1--
+2
+*/

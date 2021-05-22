@@ -1,6 +1,8 @@
 //https://www.hackerearth.com/practice/data-structures/disjoint-data-strutures/basics-of-disjoint-data-structures/practice-problems/algorithm/city-and-campers/
+
 #include<bits/stdc++.h>
 using namespace std;
+
 class comp{
     public:
     bool operator()(const pair<int,int>& p, const pair<int,int>& q)
@@ -11,15 +13,18 @@ class comp{
             return false;
     }
 };
+
 vector<int> group_size;
 vector<int> v;
 multiset<pair<int,int>,comp> ms;
+
 int parent(int a){
     if(a==v[a])
         return a;
     v[a]=parent(v[a]);
     return v[a];
 }
+
 void findset(int x,int y){
     int pa=parent(x);
     int pb=parent(y);
@@ -33,7 +38,6 @@ void findset(int x,int y){
     v[pb]=pa;
     group_size[pa]=group_size[pa]+group_size[pb];
     ms.insert(make_pair(pa,group_size[pa]));
-
 }
 
 int main()

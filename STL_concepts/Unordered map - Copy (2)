@@ -1,0 +1,34 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+
+    unordered_map<int,string> m1;
+	int entry;
+	cin>>entry;
+	for(int i=0;i<entry;i++){
+	    int shop_no;
+	    string fruit;
+	    cin>>shop_no>>fruit;
+	    m1[shop_no]=fruit;
+	}
+    for(auto i=m1.begin();i!=m1.end();i++){
+       cout<< i->first<<" "<<i->second<<"\n";
+    }
+	return 0;
+}
+/*
+--input--
+5
+4 mango
+9 apple
+7 pineapple
+1 apple
+6 orange
+--output--
+6 orange
+1 apple
+7 pineapple
+4 mango
+9 apple
+*/

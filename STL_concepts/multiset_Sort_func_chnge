@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct great{
+    public:
+    bool operator()(const pair<int,int> &p,const pair<int,int> &q){
+        if(p.second<q.second)// sort asc wrt to second element in set
+            return true;
+        else
+          return false;
+    }
+};
+
+int main() {
+	multiset<pair<int,int>,great> ms; // we should not pass param like what we do in heap, even class name should be different
+	int n;
+	cin>>n;
+	for(int i=0;i<n;i++){
+	    int x,y;
+	    cin>>x>>y;
+	    ms.insert(make_pair(x,y));
+	}
+	for(auto i=ms.begin();i!=ms.end();i++){
+	    cout<<i->first<<" "<<i->second<<"\n";
+	}
+	return 0;
+}
+/*
+--input--
+5
+1 9
+3 7
+4 5
+2 9
+1 0
+--output--
+1 0
+4 5
+3 7
+1 9
+2 9
+*/

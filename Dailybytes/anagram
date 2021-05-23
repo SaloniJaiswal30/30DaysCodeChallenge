@@ -1,0 +1,44 @@
+/*
+Question:
+This question is asked by Facebook. Given two strings s and t return whether or not s is an anagram of t.
+Note: An anagram is a word formed by reordering the letters of another word.
+
+Ex: Given the following strings...
+
+s = "cat", t = "tac", return true
+s = "listen", t = "silent", return true
+s = "program", t = "function", return false
+https://leetcode.com/problems/valid-anagram/
+*/
+
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        if(s.length()!=t.length())
+            return false;
+        map<int,int> m;
+        for(int i=0;i<s.length();i++){
+            m[s[i]]++;
+        }
+        for(int i=0;i<t.length();i++){
+            if(m.find(t[i])!=m.end()){
+                m[t[i]]--;
+                if(m[t[i]]==0)
+                    m.erase(t[i]);
+            }
+            else
+                return false;
+        }
+        if(m.empty())
+            return true;
+        else
+            return false;
+    }
+};
+/*
+--input--
+"anagram"
+"nagaram"
+--output--
+true
+*/

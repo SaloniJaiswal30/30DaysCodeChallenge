@@ -1,0 +1,86 @@
+
+// CPP code
+class Node{
+  int data;
+  Node *ancestor;
+  bool lock;
+  int descendent;
+  vector<*Node> child;
+  Node(int d,Node *root){
+    data=d;
+    ancestor=r;
+    lock=false;
+    descendent=0;
+  }
+};
+bool check_anc(Node *n){
+  if(n!=NULL){
+    if(n->lock==true)
+      return false;
+    check_anc(n->ancestor);
+  }
+  return true;
+}
+void make_anc_aware(Node *n,int des){
+  n=n->ancestor;
+  if(n!=NULL){
+    n->descendent=n->descendent+des;
+    make_anc_aware(n->ancestor,des);
+  }
+  return;
+}
+void lock(Node *node){
+  if(node){
+    if(!(node->lock)){
+      if(node->descendent==0){
+        if(check_anc(node)){
+          node->lock=true;
+          make_anc_aware(node,1);
+        }
+        else
+        	cout<<"Can't lock as ancestors are locked";
+      }
+      else
+      	cout<<"Can't lock as descendents are locked";
+    }
+    else
+    	cout<<"Already locked";
+  }
+  
+}
+void unlock(Node *node){
+  if(node){
+    if(node->lock){
+      node->lock=false;
+      make_anc_aware(node,-1);
+    }
+    else
+      cout<<"Already Unlocked";
+  }
+  
+}
+void main(){
+  Node *root =new Node(1,NULL);
+  root->child.push_back(new Node(2),root);
+  root->child.push_back(new Node(3),root);
+  root->child.push_back(new Node(4),root);
+  root->child[0]->child->push_back(new Node(5),root->child[0]);
+  root->child[0]->child->push_back(new Node(6),root->child[0]);
+  root->child[1]->child->push_back(new Node(7),root->child[1]);
+  root->child[1]->child->push_back(new Node(8),root->child[1]);
+  root->child[2]->child->push_back(new Node(9),root->child[2]);
+  root->child[2]->child->push_back(new Node(10),root->child[2]);
+  root->child[0]->child[0]->child->push_back(new Node(11),root->child[0]->child[0]);
+  root->child[0]->child[0]->child->push_back(new Node(12),root->child[0]->child[0]);
+  root->child[1]->child[0]->child->push_back(new Node(13),root->child[1]->child[0]);
+  lock(root->child[0]);//lock
+  lock(root->child[0]->child[0]);// Can't lock as ancestors are locked
+  lock(root->child[1]->child[0]);// lock
+  lock(root->child[2]);//lock
+  lock(root->child[2]);//Already Locked
+  unlock(root->child[2]);//unlock
+  unlock(root->child[2]);//Already Unlocked
+  lock(root);//Can't lock as descendents are locked
+  
+}
+

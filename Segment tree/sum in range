@@ -1,0 +1,78 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void build(int arr[],int strt,int end,int seg[],int node)
+{
+    if(strt==end){
+        seg[node]=arr[strt];
+        cout<<node<<" "<<seg[node]<<"\n";
+        return;
+    }
+    int mid=strt+((end-strt)/2);
+    build(arr, strt, mid,seg,2*node+1);
+    build(arr, mid+1, end,seg,2*node+2);
+    seg[node]=seg[2*node+1]+seg[2*node+2];
+    cout<<node<<" "<<seg[node]<<"\n";
+}
+
+int get_min(int x,int y,int strt,int end,int seg[],int node)
+{
+    if(y<strt || end<x){
+        return 0;
+    }
+    else if(x<=strt && end<=y){
+        return seg[node];
+    }
+    int mid=strt+((end-strt)/2);
+    return (get_min(x,y,strt,mid,seg,2*node+1)+get_min(x,y,mid+1,end,seg,2*node+2));
+}
+
+int main(){
+    int t;
+    cin>>t;
+    for(int i=0;i<t;i++){
+        int n,q;
+        cin>>n>>q;
+        int arr[n];
+        int s[2*n-1];
+        memset(s,0,sizeof(s));
+        for(int j=0;j<n;j++){
+            int tmp;
+            cin>>tmp;
+            arr[j]=tmp;
+        }
+        cout<<"construction\n";
+        build(arr,0,n-1,s,0);
+        for(int j=0;j<q;j++){
+            int x,y;
+            cin>>x>>y;
+            cout<<"case "<<j+1<<":\n";
+            cout<<get_min(x,y,0,n-1,s,0)<<"\n";
+        }
+    }
+    return 0;
+}
+
+/*
+--input--
+1
+4 2
+1 2 3 4
+0 2 
+2 3
+
+--output--
+
+construction
+3 1
+4 2
+1 3
+5 3
+6 4
+2 7
+0 10
+case 1:
+6
+case 2:
+7
+*/

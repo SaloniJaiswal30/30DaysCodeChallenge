@@ -1,0 +1,36 @@
+/*
+Question:
+This question is asked by Microsoft. Given a string, return the index of its first unique character. If a unique character does not exist, return -1.
+
+Ex: Given the following strings...
+
+"abcabd", return 2
+"thedailybyte", return 1
+"developer", return 0
+
+https://leetcode.com/problems/first-unique-character-in-a-string/
+*/
+
+
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        map<char,int> m;
+        for(int i=0;i<s.length();i++){
+            m[s[i]]++;
+        }
+        for(int i=0;i<s.length();i++){
+            if(m[s[i]]==1)
+                return i;
+        }
+        return -1;
+    }
+};
+
+
+/*
+--input--
+"leetcode"
+--output--
+0
+*/

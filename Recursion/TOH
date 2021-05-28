@@ -1,0 +1,48 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+
+class Solution{
+public:
+    vector<int> v1;
+    int k=0;
+    void toh(int N,int a,int b,int c,int n){
+        if(N>0){
+            toh(N-1,a,c,b,n);
+            k++;
+            if(k==n){
+                v1.push_back(a);
+                v1.push_back(c);
+				return;
+            }
+            toh(N-1,b,a,c,n);
+            
+        }
+    }
+    vector<int> shiftPile(int N, int n){
+        toh( N, 1, 2, 3,n);
+        return v1;
+    }
+};
+
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+        int N, n;
+        cin>>N>>n;
+        
+        Solution ob;
+        vector<int> ans = ob.shiftPile(N, n);
+        cout<<ans[0]<<" "<<ans[1]<<endl;
+    }
+    return 0;
+} 
+
+
+/*
+--input--
+2 2
+--output--
+2 3
+*/

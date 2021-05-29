@@ -1,0 +1,62 @@
+/*
+Make subset of m size from a given array.
+subset each pair abs(x,y) minimum differenct save in current.
+global=max(global,current)
+return global
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+vector<vector<int>> v;
+void subset(vector<int> ip,vector<int> op ,int m){
+    if(ip.size()==0 || op.size()>m){
+        if(op.size()==m){
+            v.push_back(op);
+        }
+        return;
+    }
+    vector<int> op1;
+    vector<int> op2;
+    op1=op;
+    op2=op;
+    op2.push_back(ip[0]);
+    ip.erase(ip.begin());
+    subset(ip,op1,m);
+    subset(ip,op2,m);
+    
+}
+int main() {
+	int n,m;
+	cin>>n>>m;
+	vector<int> ip;
+	vector<int> op;
+	for(int i=0;i<n;i++){
+	    int tmp;
+	    cin>>tmp;
+	    ip.push_back(tmp);
+	}
+	subset(ip,op,m);
+	int global=0;
+	for(int i=0;i<v.size();i++){
+	    int current=INT_MAX;
+	    for(int j=0;j<m-1;j++){
+	        for(int k=j+1;k<m;k++){
+	            if(abs(v[i][j]-v[i][k])<current){
+        	        current=abs(v[i][j]-v[i][k]);
+        	    }
+        	    
+	        }
+	    }
+	    global=max(global,current);
+	}
+	cout<<global;
+	return 0;
+}
+/*
+--input--
+4 3
+2 3 5 9
+--output--
+3
+
+*/

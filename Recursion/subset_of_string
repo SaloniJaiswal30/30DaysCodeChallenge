@@ -1,0 +1,40 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+void subset(string ip,string op){
+    if(ip.length()==0)
+    {
+        cout<<op<<"\n";
+        return;
+    }
+    string op1=op;
+    string op2=op+ip[0];
+    ip.erase(ip.begin()+0);
+    subset(ip,op1);
+    subset(ip,op2);
+}
+
+int main() {
+
+    string ip;
+    cin>>ip;
+    string op=" ";
+    subset(ip,op);
+	return 0;
+}
+
+
+/*
+--input--
+abc
+--output--
+ 
+ c
+ b
+ bc
+ a
+ ac
+ ab
+ abc
+*/

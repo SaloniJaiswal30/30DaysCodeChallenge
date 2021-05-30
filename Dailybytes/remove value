@@ -1,0 +1,48 @@
+/*
+Question:
+This question is asked by Google. Given a linked list and a value, remove all nodes containing the provided value, and return the resulting list.
+
+Ex: Given the following linked lists and values...
+
+1->2->3->null, value = 3, return 1->2->null
+8->1->1->4->12->null, value = 1, return 8->4->12->null
+7->12->2->9->null, value = 7, return 12->2->9->null
+
+https://leetcode.com/problems/remove-linked-list-elements/submissions/
+*/
+
+
+class Solution {
+public:
+    ListNode* removeElements(ListNode* head, int val) {
+        ListNode* tmp=head;
+        ListNode* back=head;
+        while(tmp!=NULL){
+            if(tmp->val==val && tmp==head){
+                    back=tmp;
+                    head=tmp->next;
+                    tmp=head;
+            }
+            else if(tmp->val==val){
+                back->next=tmp->next;
+                tmp=tmp->next;
+            }
+            else{
+                back=tmp;
+                tmp=tmp->next;
+            }
+        }
+        
+        return head;
+    }
+};
+
+/*
+--input--
+[1,2,6,3,4,5,6]
+6
+
+--output--
+[1,2,3,4,5]
+
+*/

@@ -1,0 +1,50 @@
+
+#include <bits/stdc++.h>
+using namespace std;
+
+
+class Solution{
+public:
+    vector<string> v1;
+    void subset(string ip,string op){
+        if(ip.size()==0){
+            v1.insert(v1.begin() , {op});
+            return;
+        }
+        string op1=op+ip[0];
+        string op2=op+" "+ip[0];
+        ip.erase(ip.begin());
+        subset(ip,op1);
+        subset(ip,op2);
+    }
+    vector<string> permutation(string S){
+        string op="";
+        op=op+S[0];
+        S.erase(S.begin());
+        subset(S,op);
+        return v1;
+    }
+};
+
+int  main(){
+    int t;
+    cin>>t;
+    while(t--){
+        string S;
+        cin>>S;
+        vector<string> ans;
+        Solution obj;
+        ans = obj.permutation(S);
+        for(int i=0;i<ans.size();i++){
+            cout<<"("<<ans[i]<<")";
+        }
+        cout << endl;
+    }
+}
+
+/*
+--input--
+ABC
+--output--
+(A B C)(A BC)(AB C)(ABC)
+*/

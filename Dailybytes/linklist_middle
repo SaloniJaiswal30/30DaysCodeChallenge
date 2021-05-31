@@ -1,0 +1,36 @@
+/*
+Question:
+This question is asked by Amazon. Given a non-empty linked list, return the middle node of the list. If the linked list contains an even number of elements, return the node closer to the end.
+
+
+1->2->3->null, return 2
+1->2->3->4->null, return 3
+1->null, return 1
+
+https://leetcode.com/problems/middle-of-the-linked-list/
+*/
+
+
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head) {
+        ListNode* start=head;
+        ListNode* end=head;
+        if(head->next==NULL)
+            return head;
+        while(end!=NULL && end->next!=NULL){
+            end=end->next->next;
+            start=start->next;
+        }
+        return start;
+    }
+};
+
+/*
+--input--
+[1,2,3,4]
+
+--output--
+[3,4]
+
+*/

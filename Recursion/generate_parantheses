@@ -1,0 +1,62 @@
+#include <bits/stdc++.h>
+using namespace std;
+vector<string> AllParenthesis(int n) ;
+
+class Solution
+{
+    public:
+    vector<string> v1;
+    void combinations(int open,int close,string op){
+        if(open==0 && close==0)
+        {
+            v1.push_back(op);
+            return;
+        }
+        if(open>0){
+            string op1=op;
+            op1.push_back('(');
+            combinations(open-1,close,op1);
+        }
+        if(open<close){
+            string op1=op;
+            op1.push_back(')');
+            combinations(open,close-1,op1);
+        }
+    }
+    vector<string> AllParenthesis(int n) 
+    {
+        string op="";
+        combinations(n,n,op);
+        return v1;
+    }
+};
+
+int main() 
+{ 
+	int t;
+	cin>>t;
+	while(t--)
+	{
+		int n;
+		cin>>n;
+		Solution ob;
+		vector<string> result = ob.AllParenthesis(n); 
+		sort(result.begin(),result.end());
+		for (int i = 0; i < result.size(); ++i)
+			cout<<result[i]<<"\n";
+	}
+	return 0; 
+} 
+
+
+
+/*
+--input--
+3
+--output--
+((()))
+(()())
+(())()
+()(())
+()()()
+*/

@@ -1,0 +1,63 @@
+//https://practice.geeksforgeeks.org/problems/print-n-bit-binary-numbers-having-more-1s-than-0s0252/1
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution{
+public:	
+    vector<string> v1;
+    void bnumber(int ones,int zeros,int N,string op){
+        if(ones+zeros==N){
+            v1.push_back(op);
+            return;
+        }
+        string op1=op;
+        op1.push_back('1');
+        bnumber(ones+1,zeros,N,op1);
+        if(ones>zeros){
+            string op2=op;
+            op2.push_back('0');
+            bnumber(ones,zeros+1,N,op2); 
+        }
+    }
+	vector<string> NBitBinary(int N)
+	{
+	    string op="";
+	    bnumber(0,0,N,op);
+	    return v1;
+	}
+};
+
+int main() 
+{
+   	
+
+   	ios_base::sync_with_stdio(0);
+    cin.tie(NULL);
+    cout.tie(NULL);
+   
+   	int t;
+   	cin >> t;
+   	while(t--)
+   	{
+   		int n;
+   		cin >> n;
+        Solution ob;
+   		vector<string> ans = ob.NBitBinary(n);
+
+   		for(auto i:ans)
+   			cout << i << " ";
+
+   		cout << "\n";
+   	}
+
+    return 0;
+}  
+
+
+/*
+--input--
+2
+--output--
+11 10 
+*/

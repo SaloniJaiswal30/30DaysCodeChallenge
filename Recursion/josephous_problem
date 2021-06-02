@@ -1,0 +1,50 @@
+//https://practice.geeksforgeeks.org/problems/game-of-death-in-a-circle1840/1#
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution {
+  public:
+    vector<int> v1;
+    void findpos(int strt,int n,int k,int &r){
+        if(v1.size()==1){
+            r=v1[0];
+            return;
+        }
+        int index=(strt+k)%v1.size();
+        v1.erase(v1.begin()+index);
+        findpos(index%v1.size(),n,k,r);
+           
+    }
+    int safePos(int n, int k) {
+        // code here
+        int result;
+        for(int i=1;i<=n;i++){
+            v1.push_back(i);
+        }
+        findpos(0,n,k-1,result);
+        return result;
+    }
+};
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int n,k;
+        
+        cin>>n>>k;
+
+        Solution ob;
+        cout << ob.safePos(n,k) << endl;
+    }
+    return 0;
+}  
+
+/*
+--input--
+4 2
+--output--
+1
+*/

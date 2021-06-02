@@ -1,0 +1,67 @@
+/*
+Question:
+This question is asked by Apple. Given a potentially cyclical linked list where each value is unique, return the node at which the cycle starts. If the list does not contain a cycle, return null.
+
+Ex: Given the following linked lists...
+
+1->2->3, return null
+1->2->3->4->5->2 (5 points back to 2), return a reference to the node containing 2
+1->9->3->7->7 (7 points to itself), return a reference to the node containing 7
+
+https://leetcode.com/problems/linked-list-cycle-ii/
+*/
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        ListNode *start=head;
+        ListNode *end=head;
+        int cycle=0;
+        while(end!=NULL && end->next!=NULL){
+            end=end->next->next;
+            start=start->next;
+            if(end==start){
+                cycle=1;
+                break;
+            }
+        }
+        if(cycle==1){
+            int count=1;
+            start=start->next;
+            while(start!=end){
+                start=start->next;
+                count++;
+            }
+            end=head;
+            start=head;
+            while(count){
+                end=end->next;
+                count--;
+            }
+            while(start!=end){
+                 end=end->next;
+                start=start->next;
+            }
+            return start;
+        }
+        else 
+            return NULL;
+    }
+};
+
+
+/*
+--input--
+[3,2,0,-4]
+1
+--output--
+tail connects to node index 1
+*/

@@ -9,16 +9,7 @@ Ex: Given the following linked lists...
 1->9->3->7->7 (7 points to itself), return a reference to the node containing 7
 
 https://leetcode.com/problems/linked-list-cycle-ii/
-*/
 
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
- */
 class Solution {
 public:
     ListNode *detectCycle(ListNode *head) {
@@ -34,18 +25,7 @@ public:
             }
         }
         if(cycle==1){
-            int count=1;
-            start=start->next;
-            while(start!=end){
-                start=start->next;
-                count++;
-            }
-            end=head;
             start=head;
-            while(count){
-                end=end->next;
-                count--;
-            }
             while(start!=end){
                  end=end->next;
                 start=start->next;
@@ -56,7 +36,6 @@ public:
             return NULL;
     }
 };
-
 
 /*
 --input--

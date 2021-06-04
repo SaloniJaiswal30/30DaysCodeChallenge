@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class Solution{
+    public:
+    int longestUniqueSubsttr(string S){
+        map<char,int> m1;
+        int mx=0;
+        vector<int> l(256,-1);
+        int strt=0;
+        for(int i=0;i<S.size();i++){
+            strt=max(strt,l[S[i]]+1);
+            mx=max(mx,i-strt+1);
+            l[S[i]]=i;
+           
+        }
+        return mx;
+    }
+};
+
+int main()
+{
+	int t;
+	cin>>t;
+	while(t--)
+	{
+		string str;
+		cin>>str;
+		Solution ob;
+		cout<<ob.longestUniqueSubsttr(str)<<endl;
+	}
+	return 0;
+}  
+
+/*
+--input--
+1
+geeksforgeeks
+
+--output--
+7
+*/

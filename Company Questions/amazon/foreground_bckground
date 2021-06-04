@@ -1,0 +1,91 @@
+//Question: https://leetcode.com/discuss/interview-question/373202
+
+#include<bits/stdc++.h>
+using namespace std;
+bool compare1(vector<int> a,vector<int> b){
+    return (a[1]<b[1]);
+    
+}
+void find_list(vector<vector<int>> a1,vector<vector<int>> b1,int t){
+    //cout<<a1.size()<<" "<<b1.size()<<"\n";
+    sort(a1.begin(),a1.end(),compare1);
+    sort(b1.begin(),b1.end(),compare1);
+    vector<vector<int>> result;
+    int i=0,j=b1.size()-1;
+    int mx=INT_MIN;
+    //cout<<i<<" "<<j;
+    while(i<a1.size() && j>=0)
+    {
+        vector<int> v;
+        if((a1[i][1]+b1[j][1])>t){
+            j--;
+        }
+        else{
+            int sum=a1[i][1]+b1[j][1];
+            if(sum<=t)
+            {
+                if(sum<=t && mx<sum){
+                    result.clear();
+                    mx=sum;
+                }
+                v.push_back(a1[i][0]);
+                v.push_back(b1[j][0]);
+                result.push_back(v);
+                int k=j-1;
+                while(k>=0 && b1[j][1]==b1[k][1]){
+                    v.push_back(a1[i][0]);
+                    v.push_back(b1[k][0]);
+                    result.push_back(v);
+                    k--;
+                }
+            }
+            i++;
+        }
+    }
+    for(int i=0;i<result.size();i++){
+        cout<<"("<<result[i][0]<<","<<result[i][1]<<") ";
+        
+    }
+    
+}
+int main(){
+    int a,b,target;
+    cin>>a>>b>>target;
+    vector<vector<int>> a1;
+    vector<vector<int>> b1;
+    for(int i=0;i<a;i++){
+        vector<int> v;
+        int tmp1,tmp2;
+        cin>>tmp1>>tmp2;
+        v.push_back(tmp1);
+        v.push_back(tmp2);
+        a1.push_back(v);
+    }
+    for(int i=0;i<b;i++){
+        vector<int> v;
+        int tmp1,tmp2;
+        cin>>tmp1>>tmp2;
+        v.push_back(tmp1);
+        v.push_back(tmp2);
+        b1.push_back(v);
+    }
+    
+    find_list(a1,b1,target);
+    return 0;
+}
+
+/*
+--input--
+4 4 10
+1 3
+2 5
+3 7
+4 10
+1 2
+2 3
+3 4
+4 5
+
+--output--
+(2,4) (3,2) 
+*/

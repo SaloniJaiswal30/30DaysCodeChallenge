@@ -1,0 +1,58 @@
+/*
+Question:
+This question is asked by Amazon. Given two strings s and t, which represents a sequence of keystrokes, where # denotes a backspace, return whether or not the sequences produce the same result.
+
+Ex: Given the following strings...
+
+s = "ABC#", t = "CD##AB", return true
+s = "como#pur#ter", t = "computer", return true
+s = "cof#dim#ng", t = "code", return false
+
+https://leetcode.com/problems/backspace-string-compare/
+*/
+
+class Solution {
+public:
+    
+    bool backspaceCompare(string s, string t) {
+        stack<int> s1,s2;
+        for(int i=0;i<s.length();i++){
+            if(s[i]!='#')
+                s1.push(s[i]);
+            else{
+                if(!s1.empty()){
+                    s1.pop();
+                }
+            }
+        }
+        for(int i=0;i<t.length();i++){
+            if(t[i]!='#')
+                s2.push(t[i]);
+            else{
+                if(!s2.empty()){
+                    s2.pop();
+                }
+            }
+        }
+        if(s1.size()!=s2.size())
+            return false;
+        while(!s1.empty()){
+            if(s1.top()!=s2.top())
+                return false;
+            s1.pop();
+            s2.pop();
+        }
+        return true;
+        
+    }
+};
+
+
+/*
+--input--
+"ab#c"
+"ad#c"
+
+--output--
+true
+*/

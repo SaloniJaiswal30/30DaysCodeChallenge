@@ -1,0 +1,51 @@
+//question: if we won't inherit class B then how can we access its member functions.It is an abstract class, so we cant make the objest as well
+
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+class A{
+    public:
+    void s1(){
+        cout<<"s1\n";
+    }
+    virtual void s2()=0;
+    
+};
+class B{
+    public:
+    void s3(){
+        cout<<"s3\n";
+    }
+    virtual void s4()=0;
+};
+class D:public B{
+    //virtual void s4()=0;
+};
+
+class C:public A,public D{
+    public:
+    void s2(){
+        cout<<"s2\n";
+    }
+    void s4(){
+        cout<<"s4\n";
+    }
+};
+int main() {
+    C c;
+    c.s1();
+    c.s2();
+    c.s3();
+    c.s4();
+	return 0;
+}
+
+/*
+
+--output--
+s1
+s2
+s3
+s4
+*/

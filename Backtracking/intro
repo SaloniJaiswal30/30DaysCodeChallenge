@@ -1,0 +1,9 @@
+// https://unacademy.com/a/free-course-on-backtracking
+
+Backtracking is simliar to recursion but its an improved version of it.There are 2 main things which makes the difference
+
+1)In Recursion we move to all possible ways. In Backtracking we does pruning. It means we are not moving ahead, if we get to know that this way wont give 
+us answer(N queen problem can clearly show pruning). 
+
+2)In backtracking after calling , we bring the input to its previous state. So that we can check all the ways(Rat and maze) and we can improve space 
+complexity(print all permutations of a string)

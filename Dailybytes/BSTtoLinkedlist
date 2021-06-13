@@ -1,0 +1,81 @@
+/*
+Question:
+Given a binary search tree, rearrange the tree such that it forms a linked list where all its values are in ascending order.
+
+Ex: Given the following tree...
+        5
+       / \
+      1   6
+return...
+
+1
+ \
+  5
+   \
+    6
+Ex: Given the following tree...
+
+       5
+      / \
+    2    9
+   / \ 
+  1   3 
+return...
+
+1
+ \
+  2
+   \
+    3
+     \
+      5
+       \
+        9
+Ex: Given the following tree...
+
+5
+ \
+  6
+return...
+
+5
+ \
+  6
+https://leetcode.com/problems/increasing-order-search-tree/
+*/
+
+class Solution {
+public:
+    int i=0;
+    TreeNode* r;
+    TreeNode* tmp;
+    void  increasingBST1(TreeNode* root) {
+        if(root==NULL)
+            return;
+        increasingBST1(root->left);
+        if(i==0){
+            r=new TreeNode(root->val);
+            i=1;
+            tmp=r;
+        }
+        else{
+            tmp->right=root;
+            tmp=root;
+        }
+        root->left=NULL;
+        increasingBST1(root->right);
+    }
+    TreeNode* increasingBST(TreeNode* root) {
+        increasingBST1(root);
+        return r;
+    }
+};
+
+
+/*
+--input--
+[5,3,6,2,4,null,8,1,null,null,null,7,9]
+
+--output--
+[1,null,2,null,3,null,4,null,5,null,6,null,7,null,8,null,9]
+*/

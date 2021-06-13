@@ -1,0 +1,57 @@
+// https://practice.geeksforgeeks.org/problems/permutations-of-a-given-string2041/1#
+
+#include<bits/stdc++.h>
+using namespace std;
+
+class Solution
+{
+    vector<string> v1;
+	public:
+	    void permut(string ip,int n){
+	        if(ip.length()-1==n)
+	        {
+	            //cout<<ip<<"\n";
+	            v1.push_back(ip);
+	            return;
+	        }
+	        for(int i=n;i<ip.length();i++){
+	            swap(ip[i],ip[n]);
+	            permut(ip,n+1);
+	            swap(ip[n],ip[i]);
+	        }
+	        
+	    }
+		vector<string>find_permutation(string S)
+		{
+		    
+		    permut(S,0);
+		    sort(v1.begin(),v1.end());
+		    return v1;
+		}
+};
+
+
+int main(){
+    int t;
+    cin >> t;
+    while(t--)
+    {
+	    string S;
+	    cin >> S;
+	    Solution ob;
+	    vector<string> ans = ob.find_permutation(S);
+	    for(auto i: ans)
+	    {
+	    	cout<<i<<" ";
+	    }
+	    cout<<"\n";
+    }
+	return 0;
+}
+
+/*
+--input--
+ABC
+--output--
+ABC ACB BAC BCA CAB CBA 
+*/

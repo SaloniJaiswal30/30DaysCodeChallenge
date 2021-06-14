@@ -1,57 +1,83 @@
-// https://practice.geeksforgeeks.org/problems/permutations-of-a-given-string2041/1#
+//https://practice.geeksforgeeks.org/problems/rat-in-a-maze-problem/1#
 
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-class Solution
-{
+class Solution{
+    public:
     vector<string> v1;
-	public:
-	    void permut(string ip,int n){
-	        if(ip.length()-1==n)
-	        {
-	            //cout<<ip<<"\n";
-	            v1.push_back(ip);
-	            return;
-	        }
-	        for(int i=n;i<ip.length();i++){
-	            swap(ip[i],ip[n]);
-	            permut(ip,n+1);
-	            swap(ip[n],ip[i]);
-	        }
-	        
-	    }
-		vector<string>find_permutation(string S)
-		{
-		    
-		    permut(S,0);
-		    sort(v1.begin(),v1.end());
-		    return v1;
-		}
+    string p;
+    bool issafe(int i,int j,vector<vector<int>> m,int n,vector<vector<bool>> &visited){
+        if(i<n && j<n && i>=0 &&j>=0 && visited[i][j]==false && m[i][j]!=0)
+            return true;
+        return false;
+    }
+    void rat_maze(int i,int j,vector<vector<int>> &m,int n,vector<vector<bool>> &visited){
+        if(!issafe(i,j,m,n,visited)) // if firat block is blocked
+          return;
+          
+        if(i==n-1 && j==n-1){
+           v1.push_back(p);
+            return;
+        }
+       
+        visited[i][j]=true;
+        if(issafe(i+1,j,m,n,visited)){
+            p.push_back('D');
+            rat_maze(i+1,j,m,n,visited);
+            p.pop_back();
+        }
+        if(issafe(i,j-1,m,n,visited)){
+            p.push_back('L');
+            rat_maze(i,j-1,m,n,visited);
+             p.pop_back();
+        }
+        if(issafe(i,j+1,m,n,visited)){
+            p.push_back('R');
+            rat_maze(i,j+1,m,n,visited);
+             p.pop_back();
+        }
+        if(issafe(i-1,j,m,n,visited)){
+            p.push_back('U');
+            rat_maze(i-1,j,m,n,visited);
+             p.pop_back();
+        }
+        visited[i][j]=false;
+    }
+    vector<string> findPath(vector<vector<int>> &m, int n) {
+        vector<vector<bool>>visited(n,vector<bool> (n,false));
+        rat_maze(0,0,m,n,visited);
+        return v1;
+    }
 };
 
 
-int main(){
+int main() {
     int t;
     cin >> t;
-    while(t--)
-    {
-	    string S;
-	    cin >> S;
-	    Solution ob;
-	    vector<string> ans = ob.find_permutation(S);
-	    for(auto i: ans)
-	    {
-	    	cout<<i<<" ";
-	    }
-	    cout<<"\n";
+    while (t--) {
+        int n;
+        cin >> n;
+        vector<vector<int>> m(n, vector<int> (n,0));
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                cin >> m[i][j];
+            }
+        }
+        Solution obj;
+        vector<string> result = obj.findPath(m, n);
+        if (result.size() == 0)
+            cout << -1;
+        else
+            for (int i = 0; i < result.size(); i++) cout << result[i] << " ";
+        cout << endl;
     }
-	return 0;
-}
-
+    return 0;
+}  
 /*
 --input--
-ABC
+4
+1 0 0 0 1 1 0 1 1 1 0 0 0 1 1 1
 --output--
-ABC ACB BAC BCA CAB CBA 
+DDRDRR DRDDRR
 */

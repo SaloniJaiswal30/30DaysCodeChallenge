@@ -1,57 +1,75 @@
-// https://practice.geeksforgeeks.org/problems/permutations-of-a-given-string2041/1#
 
 #include<bits/stdc++.h>
+
 using namespace std;
-
-class Solution
-{
-    vector<string> v1;
-	public:
-	    void permut(string ip,int n){
-	        if(ip.length()-1==n)
-	        {
-	            //cout<<ip<<"\n";
-	            v1.push_back(ip);
-	            return;
-	        }
-	        for(int i=n;i<ip.length();i++){
-	            swap(ip[i],ip[n]);
-	            permut(ip,n+1);
-	            swap(ip[n],ip[i]);
-	        }
-	        
-	    }
-		vector<string>find_permutation(string S)
-		{
-		    
-		    permut(S,0);
-		    sort(v1.begin(),v1.end());
-		    return v1;
-		}
-};
-
-
-int main(){
-    int t;
-    cin >> t;
-    while(t--)
-    {
-	    string S;
-	    cin >> S;
-	    Solution ob;
-	    vector<string> ans = ob.find_permutation(S);
-	    for(auto i: ans)
-	    {
-	    	cout<<i<<" ";
-	    }
-	    cout<<"\n";
+void display( vector<vector<int>> v){
+    for(int i=0;i<v.size();i++){
+        for(int j=0;j<v.size();j++){
+            cout<<v[i][j]<<" ";
+        }
+        cout<<"\n";
     }
+}
+bool issafe(int row,int col,int n,vector<vector<int>> v){
+    return (row>=0 && col>=0 && row<n && col<n && v[row][col]==-1);
+}
+int arrangements=0;
+void knighttour(int row,int col,int count,int n,vector<vector<int>> &v){
+    
+    if(count==n*n-1)
+    {
+        v[row][col]=count;
+        display(v);
+        v[row][col]=-1;
+        arrangements++;
+        cout<<"\n";
+        return;
+    }
+    if(count>n*n)
+       return;
+    
+    int x[8]={-2,-2,-1,-1,2,2,1,1};
+    int y[8]={1,-1,2,-2,1,-1,2,-2};
+
+    
+    for(int i=0;i<8;i++){
+        if(issafe(row+x[i],col+y[i],n,v)){
+            v[row][col]=count;
+            knighttour(row+x[i],col+y[i],count+1,n,v);
+            v[row][col]=-1;
+        }
+    }
+}
+
+int main() {
+
+    int n;
+    cin>>n;
+    vector<vector<int>> v(n,vector<int>(n,-1));
+    knighttour(0,0,0,n,v);
+    cout<<"total:"<<arrangements;
 	return 0;
 }
 
+
 /*
 --input--
-ABC
+5
 --output--
-ABC ACB BAC BCA CAB CBA 
+0 17 2 11 20 
+7 12 19 16 3 
+18 1 6 21 10 
+13 8 23 4 15 
+24 5 14 9 22 
+.
+.
+.
+.
+0 7 18 13 24 
+17 12 1 8 5 
+2 19 6 23 14 
+11 16 21 4 9 
+20 3 10 15 22 
+
+total:304
 */

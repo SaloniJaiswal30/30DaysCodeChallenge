@@ -37,30 +37,39 @@ Ex: Given the following trees...
 
 return false.
 
-https://leetcode.com/problems/linked-list-cycle/
+https://leetcode.com/problems/same-tree/
 */
 
 class Solution {
 public:
-    bool hasCycle(ListNode *head) {
-        ListNode *fast=head; 
-        ListNode *slow=head;
-        while(fast!=NULL && fast->next!=NULL){
-            fast=fast->next->next;
-            slow=slow->next;
-            if(fast==slow)
-                return true;
-            
+    bool t=true;
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        if(p==NULL && q!=NULL){
+            t=false;
+            return false;
         }
-        return false;
+        if(p!=NULL && q==NULL){
+            t=false;
+            return false;
+        }
+        if(p==NULL && q==NULL){
+            return true;
+        }
+        if(p->val!=q->val){
+            t=false;
+            return false; 
+        }
+        isSameTree(p->left,q->left);
+        isSameTree(p->right,q->right);
+        return t;
     }
 };
 
 
 /*
 --input--
-[3,2,0,-4]
-1
+[1,2,3]
+[1,2,3]
 
 --output--
 true

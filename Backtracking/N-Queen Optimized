@@ -2,53 +2,29 @@
 
 #include <bits/stdc++.h>
 using namespace std;
+
 class Solution{
 public:
     vector<vector<int>> v;
     vector<int> s;
-    bool issafe(int i,int j,vector<vector<int>> board){
-        int n=board.size();
-        int row1,col1;
-        if(i>=0 && j>=0 && i<n && j<n){
-            for(row1=0;row1<n;row1++){
-                if(board[row1][j]==1)
-                    return false;
-            }
-            row1=i-1;
-            col1=j-1;
-            while(row1>=0 && col1>=0){
-                if(board[row1][col1]==1)
-                    return false;
-                row1--;
-                col1--;
-            }
-            row1=i-1;
-            col1=j+1;
-            while(row1<n && col1<n && row1>=0 && col1>=0){
-                if(board[row1][col1]==1)
-                    return false;
-                row1--;
-                col1++;
-            }
-        }
-        else
-            return false;
-        return true;
-    }
+    bitset<100> c,ld,rd;
     void number_ways(int n,int row,int col,vector<vector<int>> board){
         if(row==n){
             v.push_back(s);
             return;
         }
         for(int i=0;i<n;i++){
-            if(issafe(row,i,board)){
+            if(!c[i] && !ld[row-i+n-1] && !rd[row+i]){
                 board[row][i]=1;
                 s.push_back(i+1);
+                c[i]=ld[row-i+n-1] =rd[row+i]=1;
                 number_ways(n,row+1,i,board);
+                c[i]=ld[row-i+n-1] =rd[row+i]=0;
                 board[row][i]=0;
                 s.pop_back();
             }
-        } 
+        }
+        
         
     }
     vector<vector<int>> nQueen(int n) {
@@ -58,6 +34,7 @@ public:
         
     }
 };
+
 
 int main(){
     int t;
@@ -81,7 +58,8 @@ int main(){
         }
     }
     return 0;
-}  
+} 
+
 
 /*
 --input--

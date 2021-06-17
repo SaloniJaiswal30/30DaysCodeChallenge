@@ -1,0 +1,70 @@
+#include <iostream>
+#include<vector>
+using namespace std;
+int total=0;
+void display(int n,vector<vector<int>> grid){
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++)
+            cout<<grid[i][j]<<" ";
+        cout<<"\n";
+    }
+}
+bool issafe(int i,int j,int n,vector<vector<int>> grid){
+    if(i-2>=0 && j-1>=0 && grid[i-2][j-1])return false;
+    if(i-2>=0 && j+1<n && grid[i-2][j+1])return false;
+    if(i-1>=0 && j-2>=0 && grid[i-1][j-2])return false;
+    if(i-1>=0 && j+2<n && grid[i-1][j+2])return false;
+    return true;
+}
+void NKnight(int row,int col,int count,int n,vector<vector<int>> &grid){
+    if(count==n){
+        display(n,grid);
+        total++;
+        cout<<"\n";
+    }
+    for(int i=row;i<n;i++){
+        for(int j=(i==row?col:0);j<n;j++){
+            if(issafe(i,j,n,grid)){
+                grid[i][j]=1;
+                NKnight(i,j+1,count+1,n,grid);
+                grid[i][j]=0;
+            }
+        }
+    }
+}
+
+int main() {
+	int n;
+	cin>>n;
+	vector<vector<int>> grid(n,vector<int>(n,0));
+	NKnight(0,0,0,n,grid);
+	cout<<"total:"<<total<<"\n";
+	return 0;
+}
+
+
+/*
+--input--
+2
+--output--
+1 1 
+0 0 
+
+1 0 
+1 0 
+
+1 0 
+0 1 
+
+0 1 
+1 0 
+
+0 1 
+0 1 
+
+0 0 
+1 1 
+
+total:6
+
+*/

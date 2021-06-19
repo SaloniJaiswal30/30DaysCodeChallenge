@@ -1,0 +1,33 @@
+/*
+Question:
+Kadane algo (numbers can be negative)
+
+Practice Link:https://leetcode.com/problems/maximum-subarray/
+*/
+
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        if(nums.size()==1)
+            return nums[0];
+        
+        int mx=nums[0];
+        int rmx=INT_MIN;
+        for(int i=1;i<nums.size();i++){
+            if(mx>rmx)
+                rmx=mx;
+            mx=max(mx+nums[i],nums[i]);
+        }
+        if(mx>rmx)
+                rmx=mx;
+        return rmx;
+    }
+};
+
+/*
+--input--
+[5,4,-1,7,8]
+
+--output--
+23
+*/

@@ -1,39 +1,97 @@
 /*
 Question:
-Sort an array of 0’s 1’s 2’s without using extra space or sorting algo 
+Merge two sorted Arrays without extra space 
 
 Practice Link:https://practice.geeksforgeeks.org/problems/sort-an-array-of-0s-1s-and-2s4231/1#
+
+This is not an accepted solution but GAP algo is used in this. Max testcases pass
 */
 
-#include<bits/stdc++.h>
-using namespace std;
+#include <bits/stdc++.h> 
+using namespace std; 
 
-class Solution
-{
+class Solution{
     public:
-    void sort012(int a[], int n)
-    {
-        long int low=0;
-        long int mid=0;
-        long int high=n-1;
-        while(mid<=high){
-            if(a[mid]==0){
-                swap(a[mid],a[low]);
-                mid++;
-                low++;
+        //Function to merge the arrays.
+        void merge(long long arr1[], long long arr2[], int n, int m) 
+        { 
+            int gap=ceil((n+m)/2);
+            while(gap>0){
+                int strt=0;
+                int end=gap;
+                //cout<<strt<<" "<<end<<"\n";
+                while(1){
+                    
+                    if(end>n-1){
+                        if(end-n-1>m-1)
+                            break;
+                        if(strt<=n-1  && arr1[strt]>arr2[end-n]){
+                         // cout<<strt<<" "<<end-n<<"*\n";
+                            int tmp=arr1[strt];
+                            arr1[strt]=arr2[end-n];
+                            arr2[end-n]=tmp;
+                        }
+                        else if(strt>n-1 && arr2[strt-n]>arr2[end-n]){
+                            //cout<<strt-n<<" "<<end-n<<"**\n";
+                            int tmp=arr2[strt-n];
+                            arr2[strt-n]=arr2[end-n];
+                            arr2[end-n]=tmp;
+                        }
+                        //else
+                            //cout<<strt<<" "<<end-n<<" "<<strt-n<<"****\n";
+                    }
+                    else{
+                       // cout<<strt<<" "<<end<<"***\n";
+                        if(arr1[strt]>arr1[end]){
+                            int tmp=arr1[strt];
+                            arr1[strt]=arr1[end];
+                            arr1[end]=tmp;
+                        }
+                    }
+                    end++;
+                    strt++;
+                }
+               // cout<<"--\n";
+                gap=ceil(gap/2);
             }
-            else if(a[mid]==1){
-                mid++;
-            }
-            else {
-                swap(a[mid],a[high]);
-                high--;
-            }
-        }
-        
     }
-    
 };
+
+
+int main() 
+{ 
+	
+	int T;
+	cin >> T;
+	
+	while(T--){
+	    int n, m;
+	    cin >> n >> m;
+	    
+	    long long arr1[n], arr2[m];
+	    
+	    for(int i = 0;i<n;i++){
+	        cin >> arr1[i];
+	    }
+	    
+	    for(int i = 0;i<m;i++){
+	        cin >> arr2[i];
+	    }
+	    Solution ob;
+	    ob.merge(arr1, arr2, n, m); 
+
+        for (int i = 0; i < n; i++) 
+            cout<<arr1[i]<<" "; 
+        
+       
+	    for (int i = 0; i < m; i++) 
+		    cout<<arr2[i]<<" "; 
+	    
+	    cout<<endl;
+	}
+
+	return 0; 
+} 
 
 int main() {
 
@@ -59,9 +117,10 @@ int main() {
 
 /*
 --input--
-5
-0 2 1 2 0
+4 5
+1 3 5 7
+0 2 6 8 9
 
 --output--
-0 0 1 2 2 
+0 1 2 3 5 6 7 8 9 
 */

@@ -1,0 +1,96 @@
+/*
+Question:
+Merge Sort
+Practice Link:https://practice.geeksforgeeks.org/problems/merge-sort/1
+*/
+
+
+#include <stdio.h>
+#include <bits/stdc++.h>
+using namespace std;
+
+/* Function to print an array */
+void printArray(int arr[], int size)
+{
+    int i;
+    for (i=0; i < size; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
+
+class Solution
+{
+    public:
+    void merge(int arr[], int l, int m, int r)
+    {
+        int i=l;
+        int j=m+1;
+        vector<int> tmp;
+        while(i<=m && j<=r){
+            if(arr[i]<=arr[j]){
+                tmp.push_back(arr[i]);
+                i++;
+            }
+            else{
+                tmp.push_back(arr[j]);
+                j++;
+            }
+        }
+        while(i<=m){
+            tmp.push_back(arr[i]);
+            i++;
+        }
+        while(j<=r){
+            tmp.push_back(arr[j]);
+            j++;
+        }
+        int t=0;
+        for(int k=l;k<=r;k++){
+            arr[k]=tmp[t];
+            t++;
+        }
+         
+    }
+    public:
+    void mergeSort(int arr[], int l, int r)
+    {
+        if(l<r){
+            int mid=l+(r-l)/2;
+            mergeSort(arr,l,mid);
+            mergeSort(arr,mid+1,r);
+            merge(arr,l,mid,r);
+        }
+        
+    }
+};
+
+int main()
+{
+    int n,T,i;
+
+    scanf("%d",&T);
+
+    while(T--){
+    
+    scanf("%d",&n);
+    int arr[n+1];
+    for(i=0;i<n;i++)
+      scanf("%d",&arr[i]);
+
+    Solution ob;
+    ob.mergeSort(arr, 0, n-1);
+    printArray(arr, n);
+    }
+    return 0;
+}
+
+
+
+/*
+--input--
+5
+4 1 3 9 7
+
+--output--
+1 3 4 7 9 
+*/

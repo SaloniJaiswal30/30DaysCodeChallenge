@@ -1,0 +1,64 @@
+/*
+Question:
+Given an n-ary tree, return its level order traversal.
+Note: an n-ary tree is a tree in which each node has no more than N children.
+
+Ex: Give the following n-ary tree…
+
+    8
+  / | \
+ 2  3  29
+return [[8], [2, 3, 29]]
+Ex: Given the following n-ary tree…
+
+     2
+   / | \
+  1  6  9
+ /   |   \
+8    2    2
+   / | \
+ 19 12 90
+return [[2], [1, 6, 9], [8, 2, 2], [19, 12, 90]]
+
+https://leetcode.com/problems/n-ary-tree-level-order-traversal/
+*/
+
+class Solution {
+public:
+    vector<vector<int>> levelOrder(Node* root) {
+        vector<vector<int>> v1;        
+        queue<Node*> q;
+        if(root==NULL)
+            return v1;
+        q.push(root);
+        q.push(NULL);
+        vector<int> v;
+        while(!q.empty()){
+            Node* tmp=q.front();
+            q.pop();
+            if(tmp==NULL){
+                v1.push_back(v);
+                v.clear();
+                if(!q.empty())
+                    q.push(NULL);
+            }
+            else{
+                v.push_back(tmp->val);
+                for(int i=0;i<tmp->children.size();i++){
+                    if(tmp->children[i]!=NULL){
+                        q.push(tmp->children[i]);
+                    }
+                }
+            }
+        }
+        return v1;
+    }
+};
+
+/*
+--input--
+[1,null,3,2,4,null,5,6]
+
+--output--
+[[1],[3,2,4],[5,6]]
+*/

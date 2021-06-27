@@ -1,0 +1,74 @@
+/*
+Question:
+Given a binary tree, return its zig-zag level order traversal (i.e. its level order traversal from left to right the first level, right to left the level the second, etc.).
+
+Ex: Given the following tree…
+
+    1
+   / \
+  2   3
+return [[1], [3, 2]]
+Ex: Given the following tree…
+
+    8
+   / \
+  2  29
+    /  \
+   3    9
+return [[8], [29, 2], [3, 9]]
+
+https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/
+*/
+
+class Solution {
+public:
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        vector<vector<int>> v1;
+        if(root==NULL)
+            return v1;
+        stack<TreeNode*> s1;
+        stack<TreeNode*> s;
+        s1.push(root);
+        
+        while(!s1.empty() || !s.empty()){
+            vector<int> v;
+            while(!s1.empty()){
+                TreeNode* tmp=s1.top();
+                s1.pop();
+                v.push_back(tmp->val);
+                if(tmp->left!=NULL){
+                    s.push(tmp->left);
+                }
+                if(tmp->right!=NULL){
+                    s.push(tmp->right);
+                }
+                
+            }
+            v1.push_back(v);
+            v.clear();
+            while(!s.empty()){
+                TreeNode* tmp=s.top();
+                s.pop();
+                v.push_back(tmp->val);
+                if(tmp->right!=NULL){
+                    s1.push(tmp->right);
+                }
+                if(tmp->left!=NULL){
+                    s1.push(tmp->left);
+                }
+               
+            }
+            if(v.size()!=0)
+            v1.push_back(v);
+        }
+        return v1;
+    }
+};
+
+
+/*
+--input--
+[1,2,3,4,6,7,5]
+--output--
+[[1],[3,2],[4,6,7,5]]
+*/

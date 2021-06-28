@@ -1,0 +1,53 @@
+/*
+Question:
+Given a binary tree and a target, return whether or not there exists a root to leaf path such that all values along the path sum to the target.
+
+Ex: Given the following tree…
+
+      1
+     / \
+    5   2
+   /   / \
+  1  12   29
+and a target of 15, return true as the path 1->2->12 sums to 15.
+Ex: Given the following tree…
+
+     104
+    /   \
+  39     31
+ / \    /  \
+32  1  9    10
+and a target of 175, return true as the path 104->39->32 sums to 175.
+
+link:https://leetcode.com/problems/path-sum/
+*/
+
+class Solution {
+public:
+    bool pathsum(TreeNode* root, int sum,int targetSum) {
+        if(root==NULL)
+            return false;
+        if(root->left==NULL && root->right==NULL){
+            if(sum==targetSum)
+                return true;
+        }
+        if((root->left !=NULL && pathsum(root->left,sum+root->left->val,targetSum)) || (root->right !=NULL && pathsum(root->right,sum+root->right->val,targetSum)))
+            return true;
+        return false;
+    }
+    bool hasPathSum(TreeNode* root, int targetSum) {
+        if(root==NULL)
+            return false;
+        return pathsum(root,root->val,targetSum);
+        
+    }
+};
+
+/*
+--input--
+[5,4,8,11,null,13,4,7,2,null,null,null,1]
+22
+
+--output--
+true
+*/

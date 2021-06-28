@@ -1,0 +1,63 @@
+/*
+Question:
+Given a binary tree, return its column order traversal from top to bottom and left to right. Note: if two nodes are in the same row and column, order 
+them from left to right.
+
+Ex: Given the following tree…
+
+    8
+   / \
+  2   29
+     /  \
+    3    9
+return [[2], [8, 3], [29], [9]]
+Ex: Given the following tree…
+
+     100
+    /   \
+  53     78
+ / \    /  \
+32  3  9    20
+return [[32], [53], [100, 3, 9], [78], [20]]
+
+*/
+
+#include<bits/stdc++.h>
+class Solution {
+public:
+    vector<vector<int>> verticalTraversal(TreeNode* root) {
+        vector<vector<int>> v1;
+        map<int,map<int,multiset<int>>> m;
+        queue<pair<TreeNode*,pair<int,int>>> q;
+        q.push(make_pair(root,make_pair(0,0)));
+        while(!q.empty()){
+            TreeNode* tmp=q.front().first;
+            int count=q.front().second.first;
+            int rowno=q.front().second.second;
+            m[count][rowno].insert(tmp->val);
+            q.pop();
+            if(tmp->left!=NULL)
+                q.push({tmp->left,{count-1,rowno+1}});
+            if(tmp->right!=NULL)
+                q.push({tmp->right,{count+1,rowno+1}});
+        }
+        for(auto i:m){
+            vector<int> v;
+            for(auto j:i.second){
+                for(auto l:j.second){
+                    v.push_back(l);
+                }
+            }
+            v1.push_back(v);
+        }
+        return v1;
+    }
+};
+
+/*
+--input--
+[3,9,20,null,null,15,7]
+
+--output--
+[[9],[3,15],[20],[7]]
+*/

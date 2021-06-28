@@ -1,0 +1,81 @@
+/*
+Question:
+Heap sort
+
+Practice Link:https://practice.geeksforgeeks.org/problems/heap-sort/1#
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+
+class Solution
+{
+    public:
+    //Heapify function to maintain heap property.
+    
+    void heapify(int arr[], int strt, int n) {
+        int l=strt;
+        int left=2*strt+1;
+        int rght=2*strt+2;
+        if(left<n && arr[left]>arr[l])
+            l=left;
+        if(rght<n && arr[rght]>arr[l])
+            l=rght;
+        if(l!=strt){
+            swap(arr[l],arr[strt]);
+            heapify(arr,l,n);
+        }
+    }
+    
+    void buildHeap(int arr[], int n) {
+        for(int i=n/2-1;i>=0;i--){
+            heapify(arr,i,n);
+        }
+        for(int i=n-1;i>=0;i--){
+            swap(arr[0],arr[i]);
+            
+            heapify(arr,0,i);
+            
+        }
+        
+    }
+    
+    //Function to sort an array using Heap Sort.
+    void heapSort(int arr[], int n)
+    {
+        buildHeap(arr,n);
+    }
+};
+
+void printArray(int arr[], int size)
+{
+    int i;
+    for (i=0; i < size; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
+
+int main()
+{
+    int arr[1000000],n,T,i;
+    scanf("%d",&T);
+    while(T--){
+    scanf("%d",&n);
+    for(i=0;i<n;i++)
+      scanf("%d",&arr[i]);
+    Solution ob;
+    ob.heapSort(arr, n);
+    printArray(arr, n);
+    }
+    return 0;
+}
+
+/*
+--input--
+5
+4 1 3 9 7
+
+--output--
+1 3 4 7 9 
+*/

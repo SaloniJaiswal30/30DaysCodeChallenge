@@ -1,0 +1,51 @@
+/*
+Question:
+Given a binary tree, return a list of strings containing all root to leaf paths.
+
+Ex: Given the following tree…
+
+   1
+ /   \
+2     3
+return ["1->2", "1->3"]
+Ex: Given the following tree…
+
+    8
+   / \
+  2  29
+    /  \
+   3    9
+return ["8->2", "8->29->3", "8->29->9"]
+
+link:https://leetcode.com/problems/binary-tree-paths/
+*/
+
+class Solution {
+public:
+    vector<string> v1;
+    void tree(TreeNode* root,string s){
+        if(root==NULL)
+            return;
+        if(root->left==NULL && root->right==NULL)
+            v1.push_back(s);
+        if(root->left)
+        tree(root->left,s+"->"+to_string(root->left->val));
+        if(root->right)
+        tree(root->right,s+"->"+to_string(root->right->val));
+        
+    }
+    vector<string> binaryTreePaths(TreeNode* root) {
+        if(root==NULL)
+            return v1;
+        tree(root,to_string(root->val));
+        return v1;
+    }
+};
+
+/*
+--input--
+[1,2,3,null,5]
+
+--output--
+["1->2->5","1->3"]
+*/

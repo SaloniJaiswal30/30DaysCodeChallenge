@@ -1,0 +1,39 @@
+/*
+Question:
+Find n^x in log N 
+
+Practice Link:https://leetcode.com/problems/powx-n/
+
+*/
+
+class Solution {
+public:
+    double myPow(double x, int n1) {
+        double ans=1.0;
+        long long n=n1;
+        if(n<0)
+            n=-1*n;
+        while(n){
+            if(n%2)
+            {
+                ans=ans*x;
+                n=n-1;
+            }
+            else{
+                x=x*x;
+                n=n/2;
+            }
+        }
+        if(n1<0)
+            return(double(1.0)/ans);
+        return ans;
+    }
+};
+
+/*
+--input--
+2.00000
+10
+--output--
+1024.00000
+*/

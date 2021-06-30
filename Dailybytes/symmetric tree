@@ -1,0 +1,53 @@
+/*
+Question:
+Given a binary tree, return whether or not it forms a reflection across its center (i.e. a line drawn straight down starting from the root).
+Note: a reflection is when an image, flipped across a specified line, forms the same image.
+
+Ex: Given the following tree…
+
+   2
+ /   \
+1     1
+return true as when the tree is reflected across its center all the nodes match.
+Ex: Given the following tree…
+
+    1
+   / \
+  5   5
+   \    \
+    7    7
+return false as when the tree is reflected across its center the nodes containing sevens do not match.
+
+https://leetcode.com/problems/symmetric-tree/
+*/
+
+class Solution {
+public:
+    bool symm(TreeNode* root1,TreeNode* root2){
+        if(root1==NULL && root2==NULL)
+            return true;
+        if(root1==NULL && root2!=NULL)
+            return false;
+        if(root1!=NULL && root2==NULL)
+            return false;
+        if(root1->val!=root2->val)
+            return false;
+        if(symm(root1->left,root2->right)==false||symm(root1->right,root2->left)==false)
+            return false;
+        return true;
+    }
+    bool isSymmetric(TreeNode* root) {
+        if(root==NULL)
+            return true;
+        return symm(root->left,root->right);
+    }
+};
+
+
+/*
+--input--
+[1,2,2,3,4,4,3]
+
+--output--
+true
+*/

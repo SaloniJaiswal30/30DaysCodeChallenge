@@ -1,0 +1,49 @@
+/*
+Question:
+LCM & HCF in logn
+
+Practice Link:https://practice.geeksforgeeks.org/problems/lcm-and-gcd4516/1#
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution {
+  public:
+    int gcd(long long A , long long B){
+        if(B==0)
+            return A;
+        gcd(B,A%B);
+    }
+    vector<long long> lcmAndGcd(long long A , long long B) {
+        vector<long long> v;
+        int hcf=gcd(A,B);
+        v.push_back((A*B)/hcf);
+        v.push_back(hcf);
+        
+        return v;
+        
+    }
+};
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        long long A,B;
+        
+        cin>>A>>B;
+
+        Solution ob;
+        vector<long long> ans = ob.lcmAndGcd(A,B);
+        cout<<ans[0]<<" "<<ans[1]<<endl;
+    }
+    return 0;
+}  
+/*
+--input--
+5 10
+
+--output--
+10 5
+*/

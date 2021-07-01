@@ -1,0 +1,27 @@
+/*
+Question:
+Factorial Trailing Zeroes
+
+Practice Link:https://leetcode.com/problems/factorial-trailing-zeroes/
+*/
+
+class Solution {
+public:
+    int trailingZeroes(int n) {
+        int a=0;
+        int i=5;
+        while(n/i!=0){
+            a=a+n/i;
+            i=i*5;
+        }
+        
+        return a;
+    }
+};
+/*
+--input--
+3
+
+--output--
+0
+*/

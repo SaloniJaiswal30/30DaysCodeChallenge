@@ -1,0 +1,54 @@
+/*
+Question:
+Given a binary search tree, rearrange the tree such that it forms a linked list where all its values are in ascending order.
+This question is asked by Amazon. Given a string s consisting of only letters and digits, where we are allowed to transform any letter to uppercase or lowercase, return a list containing all possible permutations of the string.
+
+Ex: Given the following string…
+
+S = "c7w2", return ["c7w2", "c7W2", "C7w2", "C7W2"]
+https://leetcode.com/problems/increasing-order-search-tree/
+*/
+
+class Solution {
+public:
+    vector<string> v;
+    void permute(string ip,string op){
+        if(ip.length()==0){
+            v.push_back(op);
+            return;
+        }
+        string op1=op;
+        if(isdigit(ip[0])){
+            op1.push_back(ip[0]);
+            ip.erase(ip.begin());
+            permute(ip,op1);
+        }
+        else{
+            if(isupper(ip[0]))
+                op1.push_back(tolower(ip[0]));
+            else
+                op1.push_back(toupper(ip[0]));
+            op.push_back(ip[0]);
+            ip.erase(ip.begin());
+            
+            permute(ip,op);
+            permute(ip,op1);
+            
+        }
+    }
+    vector<string> letterCasePermutation(string s) {
+        string op="";
+        permute(s,op);
+        return v;
+        
+    }
+};
+
+
+/*
+--input--
+"a1b2"
+
+--output--
+["a1b2","a1B2","A1b2","A1B2"]
+*/

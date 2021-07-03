@@ -1,0 +1,40 @@
+/*
+Question:
+Longest Consecutive Sequence 
+
+Practice Link:https://leetcode.com/problems/longest-consecutive-sequence/
+*/
+
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        unordered_set<int> s;
+        for(int i=0;i<nums.size();i++){
+            s.insert(nums[i]);
+        }
+        int mx=0;
+        for(int i=0;i<nums.size();i++){
+            int lngth=0;
+            if(s.find(nums[i]-1) == s.end()){
+                int num=nums[i];
+                //cout<<num<<" ";
+                while(s.find(num) !=s.end())
+                {
+                    num++;
+                    lngth++;
+                }
+                //cout<<lngth<<"\n";
+                if(lngth>mx)
+                    mx=lngth;
+            }
+        }
+        return mx;
+    }
+};
+/*
+--input--
+[100,4,200,1,3,2]
+
+--output--
+4
+*/

@@ -1,0 +1,32 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+// int x(lvalue)=10(rvalue)
+//2 types of references:
+//Lvalue reference which store lvalue 
+//Rvalue which store rvalue
+int main() {
+    int a=10;
+    int &t=a; //lvalue reference
+    cout<<"a="<<a<<" "<<"t="<<t<<"\n";
+    t=11;
+    cout<<"a="<<a<<" "<<"t="<<t<<"\n";
+    cout<<"&a="<<&a<<" "<<"&t="<<&t<<"\n";
+   // &&t=11; // this will give error as t is lvalue reference not rvalue reference
+    int &&r=9; //rvalue reference, it will only takes a value
+    cout<<"r="<<r<<"\n";
+    r=12;
+    cout<<"r="<<r<<"\n";
+   
+   
+}
+
+/*
+--output--
+a=10 t=10
+a=11 t=11
+&a=0x7fff4215e980 &t=0x7fff4215e980
+r=9
+r=12
+*/

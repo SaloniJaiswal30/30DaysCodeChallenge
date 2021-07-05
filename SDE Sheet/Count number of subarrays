@@ -1,0 +1,30 @@
+/*
+Question:
+Count number of subarrays with given XOR
+
+Practice Link:https://www.interviewbit.com/problems/subarray-with-given-xor/
+*/
+
+int Solution::solve(vector<int> &A, int B) {
+    int xsum=0;
+    int count=0;
+    map<int,int> m;
+    for(int i=0;i<A.size();i++){
+        xsum=xsum^A[i];
+        if(xsum==B)
+            count++;
+        else if(m.find(xsum^B)!=m.end()){
+            count=count+m[xsum^B];
+        }
+        m[xsum]++;
+    }
+    return count;
+}
+
+/*
+--input--
+[4, 2, 2, 6, 4]
+
+--output--
+6
+*/

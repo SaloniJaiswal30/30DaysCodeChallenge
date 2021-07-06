@@ -1,0 +1,40 @@
+/*
+Question:
+Longest substring without repeat 
+
+Practice Link:https://leetcode.com/problems/longest-substring-without-repeating-characters/
+*/
+
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int i=0;
+        int j=0;
+        map<char,int> m;
+        int mx=0;
+        int len=0;
+        while(j<s.length()){
+            if(m.find(s[j])==m.end()){
+                m[s[j]]=j;
+            }
+            else{
+               if(mx<(j-i))
+                   mx=j-i;
+                if(i<(m[s[j]]+1))
+                    i=m[s[j]]+1;
+                m[s[j]]=j;
+            }
+            j++;
+        }
+        if(mx<(j-i))
+            mx=j-i;
+        return mx;
+    }
+};
+/*
+--input--
+"abba"
+
+--output--
+2
+*/

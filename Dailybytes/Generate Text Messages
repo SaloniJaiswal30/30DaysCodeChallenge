@@ -1,0 +1,56 @@
+/*
+Question:
+This question is asked by Google. Given a string of digits, return all possible text messages those digits could send. 
+Note: The mapping of digits to letters is as follows…
+
+0 -> null
+1 -> null
+2 -> "abc"
+3 -> "def"
+4 -> "ghi"
+5 -> "jkl"
+6 -> "mno"
+7 -> "pqrs"
+8 -> "tuv"
+9 -> "wxyz"
+Ex: digits = "23" return ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"]
+
+https://leetcode.com/problems/letter-combinations-of-a-phone-number/
+*/
+
+class Solution {
+public:
+    void combo(string digits,int i,map<char,string> &m,string stg,vector<string> &s){
+        if(i==digits.length()){
+            s.push_back(stg);
+            return;
+        }
+        for(int j=0;j<digits.length();j++){
+            stg.append(m[digits[j]][i])
+            combo(digits,i+1,m,stg,s);
+            stg.erase(stg.length()-1);
+        }
+    }
+    vector<string> letterCombinations(string digits) {
+        vector<string> s;
+        map<char,string> m;
+        m['2']="abc";
+        m['3']="def";
+        m['4']="ghi";
+        m['5']="jkl";
+        m['6']="mno";
+        m['7']="pqrs";
+        m['8']="tuv";
+        m['9']="wxyz";
+        string stg="";
+        combo(digits,0,m,stg,s);
+        return s;
+    }
+};
+
+/*
+--input--
+"2"
+--output--
+["a","b","c"]
+*/

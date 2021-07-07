@@ -25,14 +25,16 @@ public:
             s.push_back(stg);
             return;
         }
-        for(int j=0;j<digits.length();j++){
-            stg.append(m[digits[j]][i])
+        for(int j=0;j<m[digits[i]].size();j++){
+            stg.push_back(m[digits[i]][j]);
             combo(digits,i+1,m,stg,s);
             stg.erase(stg.length()-1);
         }
     }
     vector<string> letterCombinations(string digits) {
         vector<string> s;
+        if(digits.length()==0)
+            return s;
         map<char,string> m;
         m['2']="abc";
         m['3']="def";

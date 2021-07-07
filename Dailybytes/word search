@@ -1,0 +1,68 @@
+/*
+Question:
+This question is asked by Amazon. Given a 2D board that represents a word search puzzle and a string word, 
+return whether or the given word can be formed in the puzzle by only connecting cells horizontally and vertically.
+
+Ex: Given the following board and words…
+
+board =
+[
+  ['C','A','T','F'],
+  ['B','G','E','S'],
+  ['I','T','A','E']
+]
+word = "CAT", return true
+word = "TEA", return true
+word = "SEAT", return true
+word = "BAT", return false
+
+https://leetcode.com/problems/word-search/
+*/
+
+class Solution {
+public:
+    bool safe(int i,int j,vector<vector<char>>& board){
+        int row=board.size();
+        int col=board[0].size();
+        if(i<row && i>=0 && j<col && j>=0){
+            return true;
+        }
+        return false;
+    }
+    bool check(vector<vector<char>>& board,int i,int j,string word,int w){
+        if(w==word.length()){
+            return true;
+        }
+        
+        int x[4]={0,0,-1,1};
+        int y[4]={-1,1,0,0};
+        for(int a=0;a<4;a++){
+            if(safe(i+x[a],j+y[a],board) && board[i+x[a]][j+y[a]]==word[w]){
+                board[i][j]='$';
+                if(check(board,i+x[a],j+y[a],word,w+1))
+                    return true;
+                board[i][j]= word[w-1];   
+            } 
+        }
+        return false;
+    }
+    bool exist(vector<vector<char>>& board, string word) {
+        for(int i=0;i<board.size();i++){
+            for(int j=0;j<board[0].size();j++){
+                if(board[i][j]==word[0]){
+                   // cout<<"--\n";
+                   if (check(board,i,j,word,1))
+                       return true;
+                }
+            }
+        }
+        return false;
+    }
+};
+/*
+--input--
+[["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]]
+"ABCCED"
+--output--
+true
+*/

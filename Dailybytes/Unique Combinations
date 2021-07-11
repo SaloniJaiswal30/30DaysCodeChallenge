@@ -1,0 +1,66 @@
+/*
+Question:
+This question is asked by Apple. Given a list of positive numbers without duplicates and a target number, find all unique combinations
+of the numbers that sum to the target. Note: You may use the same number more than once.
+
+Ex: Given the following numbers and target…
+
+numbers = [2,4,6,3], target = 6,
+return [
+    [2,2,2],
+    [2,4],
+    [3,3],
+    [6]
+]
+
+link:https://leetcode.com/problems/combination-sum/
+*/
+
+class Solution {
+public:
+    void combine(vector<int> candidates, int target,vector<vector<int>> &op,vector<int> &tmp,int sum){
+        cout<<"\n";
+        for(int i=0;i<candidates.size();i++)
+            cout<<candidates[i]<<" ";
+        if(sum>target || candidates.size()<=1)
+            return;
+        if(sum==target){
+            op.push_back(tmp);
+            return;
+        }
+        tmp.push_back(candidates[0]);
+        sum=sum+candidates[0];
+        if(candidates[0]<=target){
+            
+            combine(candidates,target,op,tmp,sum);
+        }
+        if(candidates.size()>0){
+            candidates.erase(candidates.begin()+0);
+            if(candidates.size()>0 && candidates[0]<=target){
+                combine(candidates,target,op,tmp,sum);
+                
+            }
+        }
+        sum=sum-candidates[0];
+        tmp.pop_back();
+    }
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>> op;
+        vector<int> tmp;
+        int s=candidates.size();
+       // for(int i=0;i<s;i++){
+            combine(candidates,target,op,tmp,0);
+           // candidates.erase(candidates.begin()+0);
+        //}
+        return op;
+    }
+};
+
+/*
+--input--
+[5,4,8,11,null,13,4,7,2,null,null,null,1]
+22
+
+--output--
+true
+*/

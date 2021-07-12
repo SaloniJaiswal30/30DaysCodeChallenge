@@ -18,49 +18,34 @@ link:https://leetcode.com/problems/combination-sum/
 
 class Solution {
 public:
-    void combine(vector<int> candidates, int target,vector<vector<int>> &op,vector<int> &tmp,int sum){
-        cout<<"\n";
-        for(int i=0;i<candidates.size();i++)
-            cout<<candidates[i]<<" ";
-        if(sum>target || candidates.size()<=1)
+    void combine(vector<int> candidates, int target,vector<vector<int>> &op,vector<int> &tmp,int start){
+        if(target<0)
             return;
-        if(sum==target){
+        if(target==0){
             op.push_back(tmp);
             return;
         }
-        tmp.push_back(candidates[0]);
-        sum=sum+candidates[0];
-        if(candidates[0]<=target){
-            
-            combine(candidates,target,op,tmp,sum);
+        for(int j=start;j<candidates.size();j++){
+            tmp.push_back(candidates[j]);
+            combine(candidates,target-candidates[j],op,tmp,j);
+            tmp.pop_back();
         }
-        if(candidates.size()>0){
-            candidates.erase(candidates.begin()+0);
-            if(candidates.size()>0 && candidates[0]<=target){
-                combine(candidates,target,op,tmp,sum);
-                
-            }
-        }
-        sum=sum-candidates[0];
-        tmp.pop_back();
     }
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
         vector<vector<int>> op;
         vector<int> tmp;
         int s=candidates.size();
-       // for(int i=0;i<s;i++){
-            combine(candidates,target,op,tmp,0);
-           // candidates.erase(candidates.begin()+0);
-        //}
+        combine(candidates,target,op,tmp,0);
+          
         return op;
     }
 };
-
 /*
 --input--
-[5,4,8,11,null,13,4,7,2,null,null,null,1]
-22
+[2,3,6,7]
+7
 
 --output--
-true
+[[2,2,3],[7]]
+
 */

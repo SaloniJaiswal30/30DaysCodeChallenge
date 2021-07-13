@@ -1,0 +1,63 @@
+/*
+Question:
+This question is asked by Google. Given a string s, return all possible partitions of s such that each substring is a palindrome.
+
+Ex: Given the following string s…
+
+s = "abcba",
+return [
+    ["a","b","c","b","a"],
+    ["a","bcb","a"],
+    ["abcba"]
+]
+
+link:https://leetcode.com/problems/palindrome-partitioning/
+*/
+
+class Solution {
+public:
+    bool palindrome(string s){
+        int strt=0;
+        int end=s.length()-1;
+        while(strt<=end){
+            if(s[strt]!=s[end]){
+                return false;
+            }
+            strt++;
+            end--;
+        }
+        
+        return true;
+    }
+    void m2mpartition(string s,vector<vector<string>> &result,vector<string> &tmp,int end){
+        if(s.length()==0){
+            result.push_back(tmp);
+            return;
+        }
+        for(int k=0;k<s.length();k++){
+             string r=s.substr(0,k+1);
+             if(palindrome(r))
+             {
+                 tmp.push_back(r);
+                 string stmp=s.substr(k+1);
+                 m2mpartition(stmp,result,tmp,end);
+                 tmp.pop_back();
+             }
+        }
+    }
+    vector<vector<string>> partition(string s) {
+        vector<vector<string>> result;
+        vector<string> tmp;
+        m2mpartition(s,result,tmp,0);
+        return result;
+    }
+};
+
+/*
+--input--
+"aaddaa"
+
+--output--
+[["a","a","d","d","a","a"],["a","a","d","d","aa"],["a","a","dd","a","a"],["a","a","dd","aa"],["a","adda","a"],["aa","d","d","a","a"],["aa","d","d","aa"],["aa","dd","a","a"],["aa","dd","aa"],["aaddaa"]]
+
+*/

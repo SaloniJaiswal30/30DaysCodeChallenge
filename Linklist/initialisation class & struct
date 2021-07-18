@@ -1,0 +1,61 @@
+#include <iostream>
+using namespace std;
+class node{
+    
+    public:
+    int data;
+    node *nxt;
+    node(int val){
+        data=val;
+        nxt=NULL;
+    }
+};
+/*struct node{ //struct can be made and used like this, below code will be same for both class & struct
+    int data;
+    node *nxt;
+    node(int val){
+        data=val;
+        nxt=NULL;
+    }
+};*/
+int main() {
+    int n;
+    cin>>n;
+    node *head,*prev;
+    for(int i=0;i<n;i++){
+        int tmp;
+        cin>>tmp;
+        node *a=new node(tmp);
+        
+        if(i==0){
+            head=a;
+            prev=a;
+        }
+        else{
+            prev->nxt=a;
+            prev=a;
+        }
+        
+    }
+    while(head!=NULL){
+        cout<<head->data<<" ";
+        head=head->nxt;
+    }
+    
+	return 0;
+}
+
+/*
+--input--
+6
+1
+2
+3
+5
+4
+9
+
+--output--
+1 2 3 5 4 9 
+
+*/

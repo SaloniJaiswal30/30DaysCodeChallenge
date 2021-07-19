@@ -1,0 +1,53 @@
+/*
+Question:
+This question is asked by Amazon. Given an integer array, two players take turns picking the largest number from the ends of the array. First, 
+player one picks a number (either the left end or right end of the array) followed by player two. Each time a player picks a particular numbers, 
+it is no longer available to the other player. This picking continues until all numbers in the array have been chosen. Once all numbers have been picked, 
+the player with the larger score wins. Return whether or not player one will win.
+Note: You may assume that each player is playing to win (i.e. both players will always choose the maximum of the two numbers each turn) and that there 
+will always be a winner.
+
+Ex: Given the following integer array...
+
+nums = [1, 2, 3], return true
+Player one takes 3
+Player two takes 2
+Player one takes 1
+3 + 1 > 2 and therefore player one wins
+
+https://leetcode.com/problems/predict-the-winner/
+*/
+
+class Solution {
+public:
+        int predict(int strt,int end,int sep,int &p1,int &p2,vector<int>& nums){
+        if(strt>end)
+            return 0;
+        if(strt==end)
+            return nums[strt];
+        if(sep%2==0){
+            p1=max(predict(strt+1,end,sep+1,p1+nums[strt],p2,nums),
+                  predict(strt.end-1,sep+1,p1+ums[end],p2,nums));
+        }
+        else{
+            p2=max(predict(strt+1.end,sep+1,p1,nums[strt]+p2,nums),
+                  predict(strt.end-1,sep+1,p1,ums[end]+p2,nums));
+        }
+    }
+    bool PredictTheWinner(vector<int>& nums) {
+        int p1=0;
+        int p2=0;
+        int i=0;
+        int j=nums.size()-1;
+        int sep=0;
+        predict(0,n,sep,p1,p2,nums);
+        return (p1>=p2) ;
+    }
+};
+
+/*
+--input--
+"2"
+--output--
+["a","b","c"]
+*/

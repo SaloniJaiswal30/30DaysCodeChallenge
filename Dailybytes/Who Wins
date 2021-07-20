@@ -20,34 +20,38 @@ https://leetcode.com/problems/predict-the-winner/
 
 class Solution {
 public:
-        int predict(int strt,int end,int sep,int &p1,int &p2,vector<int>& nums){
+    int dp[22][22][2];
+    int predict(int strt,int end,int turn,vector<int>& nums){
         if(strt>end)
             return 0;
-        if(strt==end)
-            return nums[strt];
-        if(sep%2==0){
-            p1=max(predict(strt+1,end,sep+1,p1+nums[strt],p2,nums),
-                  predict(strt.end-1,sep+1,p1+ums[end],p2,nums));
+        if(dp[strt][end][turn]!=-1)
+            return dp[strt][end][turn];
+        if(turn==0){
+            return dp[strt][end][0]=max(nums[strt]+predict(strt+1,end,1,nums),
+                 nums[end]+predict(strt,end-1,1,nums));
         }
-        else{
-            p2=max(predict(strt+1.end,sep+1,p1,nums[strt]+p2,nums),
-                  predict(strt.end-1,sep+1,p1,ums[end]+p2,nums));
-        }
+        else
+            return dp[strt][end][1]= min(predict(strt+1,end,0,nums),
+                 predict(strt,end-1,0,nums));
     }
     bool PredictTheWinner(vector<int>& nums) {
+        int sum=0;
         int p1=0;
         int p2=0;
-        int i=0;
-        int j=nums.size()-1;
-        int sep=0;
-        predict(0,n,sep,p1,p2,nums);
-        return (p1>=p2) ;
+        int n=nums.size()-1;
+        int turn=0;
+        memset(dp,-1,sizeof(dp));
+        for(int i=0;i<=n;i++)
+            sum=sum+nums[i];
+        p1=predict(0,n,turn,nums);
+        p2=sum-p1;
+       return (p1>=p2) ;
     }
 };
 
 /*
 --input--
-"2"
+[1,5,2]
 --output--
-["a","b","c"]
+false
 */

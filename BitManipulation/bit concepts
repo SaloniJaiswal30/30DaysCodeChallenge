@@ -1,0 +1,25 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int i=100; //swap 2 nibbles from 1byte
+    int res= ((i&15)<<4) | ((i&250)>>4); 
+    cout<<res<<"\n";
+
+    // if we do not of any number it will give zero except not of zero.
+    int a=8;
+    cout<<!a<<"\n";
+    
+    //power of 2, want 2 to the power 10;
+    int r=1<<10;
+    cout<<r<<"\n";
+    
+	return 0;
+}
+/*
+--output--
+70
+0
+1024
+*/
+

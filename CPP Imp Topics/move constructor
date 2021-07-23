@@ -25,13 +25,13 @@ class Move {
 int main()
 {
     //Move();
-	vector<Move> vec;
-    vec.push_back(Move());
+    vector<Move> vec;
+    vec.push_back(Move()); //new memory allocated first in default constructor and then in copy constructor. this will be dangerous if we have to do same operaton many times
     Move m1;
-    vec.push_back(m1);
+    vec.push_back(m1);//m1 is not temporary obj thats y copy constructor called
     Move m2;
     vec.push_back(move(m2));
-	return 0;
+    return 0;
 }
 
 

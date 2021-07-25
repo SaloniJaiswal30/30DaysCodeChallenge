@@ -1,0 +1,15 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n=11;
+    int bits_no=floor(log2(n))+1;
+    int res=((1<<bits_no)-1)^n;
+    cout<<res;
+	return 0;
+}
+
+/*
+--output--
+4
+*/

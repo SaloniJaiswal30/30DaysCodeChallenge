@@ -1,0 +1,24 @@
+#include<bits/stdc++.h>
+using namespace std;
+class A{
+    
+};
+class B:private A{
+    
+};
+
+int main() {
+    B b1;
+    A *ptr=(A*)(&b1); // not valid but no compiler error, give runtime error when we try to access anything using ptr
+    //A *ptr1=static_cast<A*>(&b1); //gives compiler error so its recommended to use static_cast
+    int i;
+    float f;
+    f=2.5;
+    i=static_cast<int>(f); //
+    cout<<i; //output-2
+	return 0;
+}
+/*
+--output--
+2
+*/

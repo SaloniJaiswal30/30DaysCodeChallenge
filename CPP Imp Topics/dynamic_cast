@@ -1,0 +1,52 @@
+#include <iostream>
+using namespace std;
+class Base {
+	virtual void print()
+	{
+		cout << "Base" << endl;
+	}
+};
+class Derived1 : public Base {
+	void print()
+	{
+		cout << "Derived1" << endl;
+	}
+};
+
+int main()
+{
+	Derived1 *d1=new Derived1;
+	Base *b1=new Base;
+
+    //try to convert and check
+    //base to derived(this way downcasting not possible )
+    Derived1* d2 = dynamic_cast<Derived1*>(b1);
+     if (d2 == nullptr)
+        cout << "null" << endl;
+    else
+        cout << "not null" << endl;
+        
+    // derived to base
+    Base *b2=dynamic_cast<Base*>(d1);
+     if (b2 == nullptr)
+        cout << "null" << endl;
+    else
+        cout << "not null" << endl;
+        
+    //base to derived(downcasting possible way )
+    Base* b3 = dynamic_cast<Base*>(d1);
+    Derived1* d3 = dynamic_cast<Derived1*>(b3);
+    if (d3 == nullptr)
+        cout << "null" << endl;
+    else
+        cout << "not null" << endl;
+	return 0;
+	
+}
+
+/*
+--output--
+null
+not null
+not null
+*/

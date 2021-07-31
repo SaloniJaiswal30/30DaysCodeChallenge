@@ -1,0 +1,59 @@
+#include <iostream>
+using namespace std;
+class Base{
+    public:
+    int b;
+    void setb(){
+       cout<<"setb\n"; 
+    }
+    void common(){
+        cout<<"base common\n";
+    }
+};
+class Derived:public Base{
+    public:
+    int d;
+    void setd(){
+       cout<<"setd\n"; 
+    }
+    void common(){
+        cout<<"derived common\n";
+    }
+};
+int main()
+{
+    Base *bptr=new Base;
+    bptr->setb();
+    bptr->common();
+    
+    Base *bdptr=new Derived;
+    bdptr->setb(); // can only call methods of base class inherited by derived(compile-time type checking, can use virtual keyword)
+    bdptr->common();
+    
+    Derived *dptr=new Derived;
+    dptr->setb();
+    dptr->setd(); // can call both
+    dptr->common();
+    
+    // now we want to call derived class methods using base class pointer
+    // here comes need of casting
+    Base *bdptr1;
+    ((Derived*)bdptr1)->common();
+    
+	return 0;
+	
+}
+
+
+
+/*
+--output--
+setb
+base common
+setb
+base common
+setb
+setd
+derived common
+derived common
+*/

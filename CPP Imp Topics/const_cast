@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+
+class A{
+  public:
+  int b;
+  
+  void set() const{
+      const_cast<A*>(this)->b=15; //case 2
+      
+  }
+};
+void sample (int *a){
+    cout<<*a<<"\n";
+}
+
+int main()
+{
+    const int i = 12;
+    const int *s1=&i;
+    sample(const_cast<int*>(s1)); //case 1
+	return 0;
+	
+}
+
+
+/*
+--output--
+12
+*/

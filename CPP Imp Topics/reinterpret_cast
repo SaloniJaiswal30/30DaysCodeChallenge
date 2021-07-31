@@ -1,0 +1,21 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int a=78;
+    int *aptr=&a;
+    char *captr=reinterpret_cast<char*>(aptr);// int* to char*
+    cout<<captr<<"\n";
+    int *ptr=reinterpret_cast<int*>(a);//int to int*
+    cout<<ptr<<"\n";
+	return 0;
+	
+}
+
+
+/*
+--output--
+N
+0x4e
+*/

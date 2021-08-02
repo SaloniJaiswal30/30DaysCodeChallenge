@@ -1,0 +1,8 @@
+//Smart pointers are those which deallocate the memory by itself, we do not have to write explicitly
+
+/*
+--output--
+template:0
+template:0
+template:1
+*/

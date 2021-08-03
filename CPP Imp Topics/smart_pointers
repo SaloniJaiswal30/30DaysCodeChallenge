@@ -1,8 +1,63 @@
 //Smart pointers are those which deallocate the memory by itself, we do not have to write explicitly
 
+#include <iostream>
+#include <memory>
+using namespace std;
+
+class smrt_ptr {
+public:
+	int l, b;
+	void set(int li, int bi) {
+		l = li;
+		b = bi;
+	}
+	int area() {
+		return l * b;
+	}
+};
+int main() {
+
+	//auto_ptr do not copy the stored pointer but it transfer it, leaving first pointer empty.
+	auto_ptr<smrt_ptr> a1(new smrt_ptr); //strict ownership
+	a1->set(10, 5);
+	cout<<a1->area()<<"\n";
+	auto_ptr<smrt_ptr> a2(a1);
+	cout << a2->area()<<"\n";
+
+	//unique ptr is the replacement of auto_ptr, it is improved versiom having improved security
+	//(no fake copy assignments), added features (deleters) and support for arrays
+	//so any attempt to make a copy of unique_ptr will cause a compile-time error.
+	unique_ptr<smrt_ptr> u1(new smrt_ptr);
+	u1->set(6, 7);
+	cout << u1->area()<<"\n";
+	unique_ptr<smrt_ptr> u2= move(u1);
+	cout << u2->area() << "\n";
+
+	//it is reference counting ownership model. It is the container of raw pointer.
+	//It has the reference count of the contained pointers
+	//resource will not deleted untill reference count becomes zero
+	//Use shared_ptr if you want to share ownership of a resource
+	shared_ptr<smrt_ptr> s1(new smrt_ptr);
+	s1->set(2, 7);
+	cout << s1->area() <<" "<< s1.use_count()<< "\n";
+	shared_ptr<smrt_ptr> s2(s1);
+	cout << s2->area() <<" "<< s1.use_count()<<" " <<s2.use_count()<< "\n";
+
+	//weak_ptr is a copy of shared_ptr but it doesnot participate in reference counting. 
+	//It provides access to objects, owned by one or more shared pointers.
+	//It is required in some case to remove cyclic dependencies.
+	//when to use:When you do want to refer to your object from multiple places – for those references
+	//for which it’s ok to ignore and deallocate (so they’ll just note the object is gone when you try to 
+	//dereference).
+	return 0;
+}
+
 /*
 --output--
-template:0
-template:0
-template:1
+50
+50
+42
+42
+14 1
+14 2 2
 */

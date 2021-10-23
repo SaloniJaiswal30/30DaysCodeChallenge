@@ -1,0 +1,52 @@
+/**question: Helloworld!
+* e   w   d
+*H l o o l
+*   l   r
+*/
+
+#include <iostream>
+using namespace std;
+
+void pattern(string s){
+    int i=1;
+    for(int j=0;j<s.length();j++){
+        if(j==i){
+            cout<<s[j];
+            i=i+4;
+        }
+        else
+            cout<<" ";
+    }
+    cout<<"\n";
+    i=0;
+    for(int j=0;j<s.length();j++){
+        if(j==i){
+            cout<<s[j];
+            i=i+2;
+        }
+        else
+            cout<<" ";
+    }
+    cout<<"\n";
+    i=3;
+    for(int j=0;j<s.length();j++){
+        if(j==i){
+            cout<<s[j];
+            i=i+4;
+        }
+        else
+            cout<<" ";
+    }
+}
+int main(){
+    pattern("How are you doing today?");
+    return 0;
+}
+
+/*
+
+--output--
+ o   r   o   o       a  
+H w a e y u d i g t d y 
+               n   o   ?
+*/

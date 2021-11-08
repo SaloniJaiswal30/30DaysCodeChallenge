@@ -1,0 +1,197 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+class Node{
+public:
+  string data;
+  Node *ancestor;
+  int lock;
+  int descendent;
+  int uid;
+  vector<Node*> child;
+  Node(string s,Node *root){
+      data=s;
+      ancestor=root;
+      lock=false;
+      uid=-1;
+      descendent=0;
+  }
+};
+Node *selectd;
+ void find(string s, Node *root){
+    if(root==NULL)
+        return;
+    if(root->data==s){
+        //cout<<"yes\n";
+        selectd=root;
+        return;
+    }
+    for(int i=0;i<root->child.size();i++){
+        find(s,root->child[i]);
+        if(selectd!=NULL)
+            return;
+    }
+}
+bool check_ans(Node *n){
+      if(n!=NULL){
+        if(n->lock==true)
+          return false;
+        check_ans(n->ancestor);
+      }
+  return true;
+}
+void make_aware(Node *n,int des){
+    n=n->ancestor;
+    if(n!=NULL){
+        n->descendent=n->descendent+des;
+        make_aware(n,des);
+    }
+  return;
+}
+void lock(Node *n,int id){
+    if(n->lock==false){
+        if(n->descendent==0){
+            if(check_ans(n))
+            {
+                n->lock=true;
+                n->uid=id;
+                make_aware(n,1);
+                cout<<"true\n";
+
+            }
+            else
+            cout<<"false\n";
+        }
+        else
+            cout<<"false\n";
+    }
+    else{
+        cout<<"false\n";
+    }
+    
+}
+void unlock(Node *n,int id){
+    if(n->lock==true){
+        n->lock=false;
+        n->uid=-1;
+        cout<<"true\n";
+        make_aware(n,-1);
+    }
+    else
+        cout<<"false\n";
+}
+bool check=true;
+void des_valid(Node *n,int id){
+    if(n!=NULL){
+        for(int i=0;i<n->child.size();i++){
+            des_valid(n->child[i],id);
+            if(n->child[i]->lock && n->child[i]->uid != id ){
+               check=false; 
+               return;
+            }
+        }
+    }
+}
+void des_unlock(Node *n,int id){
+    if(n!=NULL){
+        for(int i=0;i<n->child.size();i++){
+            des_unlock(n->child[i],id);
+            if(n->child[i]->lock){
+                n->child[i]->lock=false;
+                n->child[i]->uid=-1;
+                make_aware(n,-1);
+            }
+        }
+    }
+}
+void upgrade(Node *n,int id){
+    if(n->lock==false){
+        if(n->descendent!=0){
+            des_valid(n,id);
+            if(check){
+                des_unlock(n,id);
+                n->lock=true;
+                n->uid=id;
+                cout<<"true\n";
+                make_aware(n,1);
+            }
+            else
+            cout<<"1false\n";
+        }
+        else
+            cout<<"2false\n";
+    }
+    else
+        cout<<"3false\n";
+    
+}
+void operation(int op,Node *n,int uid){
+    if(op==1){
+        lock(n,uid);
+    }
+    if(op==2){
+        unlock(n,uid);
+    }
+    if(op==3){
+	    upgrade(n,uid);
+    }
+}
+int main() {
+	int n,m,q;
+	cin>>n>>m>>q;
+	string s;
+	cin>>s;
+	Node *root=new Node(s,NULL);
+	queue<Node*> q1;
+	q1.push(root);
+	int j=1;
+	while(!q1.empty()){
+	    Node *tmp=q1.front();
+	    q1.pop();
+    	for(int i=0;i<m;i++){
+    	    if(j<n){
+        	    cin>>s;
+        	    Node *n=new Node(s,tmp);
+        	    tmp->child.push_back(n);
+        	    q1.push(n);
+        	    j++;
+    	    }
+    	    else 
+    	        break;
+    	}
+	}
+	for(int i=0;i<q;i++){
+	    int op,id;
+	    string name;
+	    cin>>op>>name>>id;
+	    selectd=NULL;
+	    find(name,root);
+	    operation(op,selectd,id);
+	}
+	return 0;
+}
+/*
+--input--
+7
+2
+5
+world
+asia
+africa
+china
+india
+southafrica
+egypt
+1 china 9
+1 india 9
+3 asia 9
+2 india 9
+2 asia 9
+--output--
+true
+true
+true
+false
+true
+*/

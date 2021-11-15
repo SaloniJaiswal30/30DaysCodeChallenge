@@ -1,3 +1,5 @@
+//https://www.geeksforgeeks.org/tree-of-space-locking-and-unlocking-n-ary-tree/
+
 #include <iostream>
 #include<bits/stdc++.h>
 using namespace std;

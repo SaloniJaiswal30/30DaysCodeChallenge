@@ -1,0 +1,238 @@
+#include<bits/stdc++.h>
+using namespace std;
+class User{
+    int id;
+    string name;
+    int login,signup=0;
+    vector<User*> following;
+    vector<User*> followers;
+    public:
+    User(int user_id,string n){
+        id=user_id;
+        name=n;
+        signup=1;
+    }
+    void userlogin()
+    {
+        login=1;
+    }
+    void userlogout(){
+        login=0;
+    }
+    bool checklogin(){
+        return login;
+    }
+    void addfollower(User* u){
+        followers.push_back(u);
+    }
+    void addfollowing(User* u){
+        following.push_back(u);
+    }
+    
+    
+};
+class posts{
+    int postid;
+    string data;
+    vector<posts*> reply;
+    time_t d;
+    int upvote;
+    int downvote;
+    string Username;
+    public:
+    void addpost(int id,string name,string userdata){
+        Username=name;
+        postid=id;
+        data=userdata;
+        upvote=0;
+        downvote=0;
+        d=time(0);
+        
+    }
+    int print(){
+        cout<<"id:"<<postid<<endl;
+        cout<<"upvote:"<<upvote<<endl;
+        cout<<"downvote:"<<downvote<<endl;
+        cout<<"Username:"<<Username<<endl;
+        cout<<"post:"<<data<<endl;
+        //traverse reply vector
+    }
+    void incdownvote(){
+        downvote++;
+    }
+    void incupvote(){
+        upvote++;
+    }
+    string getusername(){
+        return Username;
+    }
+    void addreply(posts *p){
+        reply.push_back(p);
+    }
+};
+int main()
+{
+    string s;
+    int countpost=0,countuser=0;
+    map<int,posts*> all_posts;
+    map<string,User*> usrs;
+    while(cin>>s){
+        //cout<<s<<"\n";
+        if(s=="signup"){
+            cout<<s<<"\n";
+            string name;
+            cin>>name;
+            if(usrs.find(name)==usrs.end()){
+                countpost++;
+                User *u=new User(countpost,name);
+                usrs[name]=u;
+            }
+            else{
+                cout<<"User already exists\n";
+            }
+        }
+        else if(s=="login"){
+             cout<<s<<"\n";
+            string name;
+            cin>>name;
+            if(usrs.find(name)!=usrs.end()){
+                usrs[name]->userlogin();
+            }
+            else{
+                cout<<"Signup first\n";
+            }
+            
+            
+        }
+        else if(s=="logout"){
+             cout<<s<<"\n";
+            string name;
+            cin>>name;
+            if(usrs.find(name)!=usrs.end()){
+                usrs[name]->userlogout();
+            }
+            else{
+                cout<<"Signup first\n";
+            }
+            
+            
+        }
+        else if(s=="post"){
+             cout<<s<<"\n";
+            string name;
+            cin>>name;
+            if(usrs.find(name)!=usrs.end()){
+                if(usrs[name]->checklogin()){
+                    countpost++;
+                    string data;
+                    getline(cin,data);
+                    posts *p=new posts;
+                    p->addpost(countpost,name,data);
+                    all_posts[countpost]=p;
+                }
+                else{
+                    cout<<"Please login\n";
+                }
+            }
+            else{
+                cout<<"Signup first\n";
+            }
+        }
+        else if(s=="follow"){
+            string currentuser,followuser;
+            cin>>currentuser>>followuser;
+    
+            if(usrs.find(currentuser)!=usrs.end() && usrs.find(followuser)!=usrs.end()){
+                usrs[currentuser]->addfollowing(usrs[followuser]);
+                usrs[followuser]->addfollower(usrs[currentuser]);
+            }
+            else{
+                cout<<"user notpresent\n";
+            }
+        }
+        else if(s=="downvote"){
+             cout<<s<<"\n";
+            int id;
+            cin>>id;
+            if(all_posts.find(id)!=all_posts.end()){
+                string name=all_posts[id]->getusername();
+                if(usrs.find(name)!=usrs.end() && usrs[name]->checklogin())
+                    all_posts[id]->incdownvote();
+                else{
+                    cout<<"User is not loggedin";
+                }
+            }
+            else{
+                cout<<"post id not found";
+            }
+        }
+        else if(s=="upvote"){
+             cout<<s<<"\n";
+            int id;
+            cin>>id;
+            if(all_posts.find(id)==all_posts.end()){
+                string name=all_posts[id]->getusername();
+                if(usrs.find(name)==usrs.end() && usrs[name]->checklogin())
+                    all_posts[id]->incupvote();
+                else{
+                    cout<<"User is not loggedin";
+                }
+            }
+            else{
+                cout<<"post id not found";
+            }
+        }
+        else if(s=="shownewsfeed"){
+             cout<<s<<"\n";
+            for(auto itr=all_posts.begin();itr!=all_posts.end();itr++){
+                all_posts[itr->first]->print();
+            }
+        }
+        else if(s=="reply"){
+            cout<<s<<"\n";
+            int id;
+            cin>>id;
+            if(all_posts.find(id)!=all_posts.end()){
+                string name=all_posts[id]->getusername();
+                if(usrs.find(name)!=usrs.end() && usrs[name]->checklogin()){
+                    countpost++;
+                    string data;
+                    getline(cin,data);
+                    posts *p=new posts;
+                    p->addpost(countpost,name,data);
+                    all_posts[id]->addreply(p);
+                }
+                else{
+                    cout<<"User is not loggedin";
+                }
+            }
+            else{
+                cout<<"post id not found";
+            }
+            
+        }
+        else {
+            cout<<"Please enter correct input\n";
+        }
+    }
+    return 0;
+} 
+
+/*
+--input--
+signup saloni
+login saloni
+post saloni I am lord Voldemort
+shownewsfeed
+
+--output--
+signup
+login
+post
+shownewsfeed
+id:2
+upvote:0
+downvote:0
+Username:saloni
+post: I am lord Voldemort
+*/

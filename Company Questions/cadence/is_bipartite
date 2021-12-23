@@ -1,0 +1,25 @@
+struct Node {
+	vector<Node*> adj;
+	int color=-1;
+};
+bool isBipartite(Node *node){
+
+	node->color=0;
+	queue<Node*> q1;
+	q1.push(node);
+	while(!q.empty()){
+		Node *tmp=q1.front();
+		q1.pop();
+		for(int i=0;i<tmp->adj.size();i++){
+			if(tmp->color==tmp->adj[i]->color)
+				return false;
+			else{
+				if(tmp->color==1)
+					tmp->adj[i]->color=0;
+				else
+					tmp->adj[i]->color=1;
+				if(tmp->adj[i]->color=-1)
+					q1.push(tmp->adj[i]);	
+			}
+		}
+	}

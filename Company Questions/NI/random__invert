@@ -1,0 +1,31 @@
+int result=1;
+void func(n1,n2){
+	if(result===0)
+		return;
+		
+	if(n1>left!=NULL && n2-->left!=NULL && n1->left ==n2->left && n1->left ==n2->left){
+			return func(n1->left,n2->left)
+			return func(n1->right,n2->right)
+	}
+	
+	else if(n1->left->data==n2->right->data && n1->right==n2->left){
+		/*tmp=n1->left;
+		n1->left=n1->right;
+		n1->right=tmp;*/
+		func(n1->right,n2->left) 
+		func(n1->left,n2->right)
+		
+	}
+	else{
+		result=0;
+		return;
+	}
+}
+
+void main(){
+ treenode *node1;
+ treenode *node2;
+ func(node1,node2 )
+ 
+ 
+}

@@ -1,0 +1,42 @@
+class Student {
+
+	int age;
+  double score;
+  Parent father, mother;
+.
+..
+...
+....
+....
+
+}
+
+
+PassCriteria (score > 0.5)
+ScholarshipACriteria (score > 0.6 && father.income < 100000)
+ScholarshipBCriteria (score > 0.6 && father.income < 200000)
+
+class ScholarshipCriteria{
+		
+		bool criteria(student s)
+};
+class Acriteria: public ScholarshipCriteria{
+		
+		bool criteria(student s){
+    	 
+    	if(s.)
+    }
+};
+class Bcriteria: public ScholarshipCriteria{
+
+};
+class FilterService {
+
+   vector<int> getFilteredStudent(inputStudents : List<Student>,ScholarshipCriteria *obj ){
+   			for(int-0-n){
+        	obj.
+        }
+   
+   }
+
+}
